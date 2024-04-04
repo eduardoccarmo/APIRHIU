@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Application\APIRHUI.Application\APIRHUI.Application.csproj" />
+    <ProjectReference Include="..\..\src\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
+    <ProjectReference Include="..\..\src\Data\APIRHIU.Data\APIRHIU.Data.csproj" />
+    <ProjectReference Include="..\..\src\Domain\APIRHIU.Domain\APIRHIU.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
