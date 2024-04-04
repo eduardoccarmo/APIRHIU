@@ -11,10 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Application\APIRHUI.Application\APIRHUI.Application.csproj" />
-    <ProjectReference Include="..\..\src\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
-    <ProjectReference Include="..\..\src\Data\APIRHIU.Data\APIRHIU.Data.csproj" />
-    <ProjectReference Include="..\..\src\Domain\APIRHIU.Domain\APIRHIU.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
   </ItemGroup>
 
 </Project>
