@@ -1,20 +1,21 @@
 ﻿using APIRHIU.Core.DomainObjects;
 using APIRHIU.Data.Network.TokenService;
 using Microsoft.Extensions.Options;
+using System.Net.Http.Headers;
 
 namespace APIRHIU.Data.Network
 {
     public class HttpClientService : IHttpClientService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly HttpClient _httpClient;
         private readonly IOptions<AppSettings> _options;
         private readonly ITokenService _tokenService;
 
-        public HttpClientService(IHttpClientFactory httpClientFactory, 
-                                 IOptions<AppSettings> options, 
+        public HttpClientService(HttpClient httpClient,
+                                 IOptions<AppSettings> options,
                                  ITokenService tokenService)
         {
-            _httpClientFactory = httpClientFactory;
+            _httpClient = httpClient;
             _options = options;
             _tokenService = tokenService;
         }
@@ -39,14 +40,12 @@ namespace APIRHIU.Data.Network
             {
                 Method = HttpMethod.Post,
                 Content = requestBody,
-                RequestUri = new Uri(_options.Value.BaseAdress + _options.Value.RessourceUrl)
+                RequestUri = new Uri(_options.Value.BaseAdressIdentity + _options.Value.EndPointAutenticacao)
             };
 
             try
             {
-                using var client = _httpClientFactory.CreateClient();
-
-                using var response = await client.SendAsync(requestMessage);
+                using var response = await _httpClient.SendAsync(requestMessage);
 
                 if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
                 {
@@ -57,11 +56,37 @@ namespace APIRHIU.Data.Network
                         bearerToken = System.Text.Json.JsonSerializer.Deserialize<BearerToken>(result);
                     }
                 }
-
             }
             catch (HttpRequestException) { }
 
-            return bearerToken; 
+            return bearerToken;
+        }
+
+        public async Task<RetornoUnico> ObterEnvelopeColaborador(string token)
+        {
+            var ret =  new RetornoUnico();
+
+            var body = new { cpf = "13109498677" };
+
+            var serializedBody = System.Text.Json.JsonSerializer.Serialize(body);
+
+            var requestMessage = new StringContent(serializedBody);
+            requestMessage.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var requestUrl = _options.Value.BaseAdressSign + _options.Value.EndPointEnvelope;
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            using var responseRequest = await _httpClient.PostAsync(requestUrl, requestMessage);
+
+            if (responseRequest.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var result = await responseRequest.Content.ReadAsStringAsync();
+
+                ret = System.Text.Json.JsonSerializer.Deserialize<RetornoUnico>(result);
+            }
+
+            return ret;
         }
     }
 }

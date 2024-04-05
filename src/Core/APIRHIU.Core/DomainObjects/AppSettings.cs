@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIRHIU.Core.DomainObjects
+﻿namespace APIRHIU.Core.DomainObjects
 {
     public class AppSettings
     {
-        public string? BaseAdress { get; set; } = null;
-        public string? RessourceUrl { get; set; } = null;
+        public string? BaseAdressIdentity { get; set; } = null;
+        public string? BaseAdressSign { get; set; }
+        public string? EndPointAutenticacao { get; set; } = null;
+        public string? EndPointEnvelope { get; set; } = null;
+        public string? EndPointArquivo { get; set; } = null;
         public string? PrivateKey { get; set; } = null;
+        
+
     }
 }

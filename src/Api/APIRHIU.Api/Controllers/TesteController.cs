@@ -13,12 +13,21 @@ namespace APIRHIU.Api.Controllers
         {
             _httpClientService = httpClientService;
         }
+
         [HttpGet]
         [Route("teste/api")]
-
         public async Task<IActionResult> teste()
         {
             var result = await _httpClientService.GerarBearerToken();
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("teste/api")]
+        public async Task<IActionResult> teste2(string token)
+        {
+            var result = await _httpClientService.RecuperarDossieAdmissao(token);
 
             return Ok(result);
         }
