@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
+    <ProjectReference Include="..\..\Data\APIRHIU.Data\APIRHIU.Data.csproj" />
   </ItemGroup>
 
 </Project>

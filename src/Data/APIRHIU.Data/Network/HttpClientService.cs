@@ -10,7 +10,9 @@ namespace APIRHIU.Data.Network
         private readonly IOptions<AppSettings> _options;
         private readonly ITokenService _tokenService;
 
-        public HttpClientService(IHttpClientFactory httpClientFactory, IOptions<AppSettings> options, ITokenService tokenService)
+        public HttpClientService(IHttpClientFactory httpClientFactory, 
+                                 IOptions<AppSettings> options, 
+                                 ITokenService tokenService)
         {
             _httpClientFactory = httpClientFactory;
             _options = options;
@@ -57,10 +59,7 @@ namespace APIRHIU.Data.Network
                 }
 
             }
-            catch (HttpRequestException)
-            {
-
-            }
+            catch (HttpRequestException) { }
 
             return bearerToken; 
         }
