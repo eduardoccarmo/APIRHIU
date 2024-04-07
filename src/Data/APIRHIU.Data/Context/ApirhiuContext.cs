@@ -2,7 +2,7 @@
 
 namespace APIRHIU.Data.Context
 {
-    public class ApiDbContext : DbContext
+    public class ApirhiuContext : DbContext
     {
     }
 }
