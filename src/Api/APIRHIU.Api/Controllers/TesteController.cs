@@ -1,7 +1,5 @@
-﻿
-using APIRHIU.Data.Network;
+﻿using APIRHIU.Data.Network;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 
 namespace APIRHIU.Api.Controllers
 {
@@ -27,7 +25,13 @@ namespace APIRHIU.Api.Controllers
         [Route("teste/api")]
         public async Task<IActionResult> teste2(string token)
         {
-            var result = await _httpClientService.RecuperarDossieAdmissao(token);
+            var result = await _httpClientService.ObterEnvelopeColaborador(token);
+
+            List<string>? listaDeIds = new List<string>();
+
+            result?.Data?.Envelopes?.First()?.Documents?.ForEach(x => listaDeIds.Add(x.UUID));
+
+            var doc = await _httpClientService.ObterDocumentoColaborador(result.Data.Envelopes.First().Documents.First().UUID);
 
             return Ok(result);
         }

@@ -1,5 +1,6 @@
 ﻿using APIRHIU.Core.DomainObjects;
 using APIRHIU.Data.Network.TokenService;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 
@@ -66,7 +67,7 @@ namespace APIRHIU.Data.Network
         {
             var ret =  new RetornoUnico();
 
-            var body = new { cpf = "13109498677" };
+            var body = new { cpf = "10902174630" };
 
             var serializedBody = System.Text.Json.JsonSerializer.Serialize(body);
 
@@ -87,6 +88,24 @@ namespace APIRHIU.Data.Network
             }
 
             return ret;
+        }
+
+        public async Task<string> ObterDocumentoColaborador(string uiid)
+        {
+
+            var message = new HttpRequestMessage
+            {
+                RequestUri = new Uri(_options.Value.BaseAdressSign + _options.Value.EndPointArquivo + $"{uiid}"),
+                Method = HttpMethod.Get
+            };
+
+            using var response = await _httpClient.SendAsync(message);
+
+            var teste = await response.Content.ReadAsByteArrayAsync();
+
+            File.WriteAllBytes("C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\testeDocUnico.pdf", teste);
+
+            return string.Empty;
         }
     }
 }

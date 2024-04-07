@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
-  </ItemGroup>
-
 </Project>

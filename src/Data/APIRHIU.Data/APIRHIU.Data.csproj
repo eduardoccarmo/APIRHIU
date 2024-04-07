@@ -15,7 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
-    <ProjectReference Include="..\..\Domain\APIRHIU.Domain\APIRHIU.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\" />
   </ItemGroup>
 
 </Project>
