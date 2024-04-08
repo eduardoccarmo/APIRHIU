@@ -1,6 +1,5 @@
 ﻿using APIRHIU.Core.DomainObjects;
 using APIRHIU.Data.Network.TokenService;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 
@@ -78,14 +77,18 @@ namespace APIRHIU.Data.Network
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            using var responseRequest = await _httpClient.PostAsync(requestUrl, requestMessage);
-
-            if (responseRequest.StatusCode == System.Net.HttpStatusCode.OK)
+            try
             {
-                var result = await responseRequest.Content.ReadAsStringAsync();
+                using var responseRequest = await _httpClient.PostAsync(requestUrl, requestMessage);
 
-                ret = System.Text.Json.JsonSerializer.Deserialize<RetornoUnico>(result);
+                if (responseRequest.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var result = await responseRequest.Content.ReadAsStringAsync();
+
+                    ret = System.Text.Json.JsonSerializer.Deserialize<RetornoUnico>(result);
+                }
             }
+            catch (HttpRequestException) { }
 
             return ret;
         }
