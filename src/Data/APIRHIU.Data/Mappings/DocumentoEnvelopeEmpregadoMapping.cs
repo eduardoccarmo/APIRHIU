@@ -1,11 +1,6 @@
 ﻿using APIRHIU.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APIRHIU.Data.Mappings
 {
@@ -15,7 +10,7 @@ namespace APIRHIU.Data.Mappings
         {
             builder.ToTable("documento_envelope_empregado");
 
-            builder.HasKey(x => x.IdDocumentoEnvelopeEmpregado)
+            builder.HasKey(x => x.Id)
                 .HasName("id_documento_envelope_empregado");
 
             builder.Property(x => x.IdCapaEvelopeEmpregado)

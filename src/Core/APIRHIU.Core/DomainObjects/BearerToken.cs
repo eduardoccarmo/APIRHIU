@@ -1,6 +1,8 @@
-﻿namespace APIRHIU.Core.DomainObjects
+﻿using APIRHIU.Core.DomainObjects;
+
+namespace APIRHIU.Domain.Models
 {
-    public class BearerToken
+    public class BearerToken 
     {
         public string access_token { get; set; } = string.Empty;
         public int expires_in { get; set; }

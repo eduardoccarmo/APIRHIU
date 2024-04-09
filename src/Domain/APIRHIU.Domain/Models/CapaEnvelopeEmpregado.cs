@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIRHIU.Core.DomainObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace APIRHIU.Domain.Models
 {
-    public class CapaEnvelopeEmpregado
+    public class CapaEnvelopeEmpregado : Entity
     {
         private readonly IList<DocumentoEnvelopeEmpregado>? _documentosEnvelope;
 
-        public CapaEnvelopeEmpregado(int idCapaEnvelopeEmpregado, 
-                                     string? matriculaEmpregado, 
+        public CapaEnvelopeEmpregado(string? matriculaEmpregado, 
                                      DateTime dataCriacaoEnvelope, 
                                      string? situacaoEnvelope, 
                                      string? codigoIdentificaoEnvelope)
         {
-            IdCapaEnvelopeEmpregado = idCapaEnvelopeEmpregado;
             MatriculaEmpregado = matriculaEmpregado;
             DataCriacaoEnvelope = dataCriacaoEnvelope;
             SituacaoEnvelope = situacaoEnvelope;
@@ -25,7 +24,6 @@ namespace APIRHIU.Domain.Models
             _documentosEnvelope = new List<DocumentoEnvelopeEmpregado>();
         }
 
-        public int IdCapaEnvelopeEmpregado { get; private set; }
         public string? MatriculaEmpregado { get; private set; }
         public DateTime DataCriacaoEnvelope { get; private set; }
         public string? SituacaoEnvelope { get; private set; }

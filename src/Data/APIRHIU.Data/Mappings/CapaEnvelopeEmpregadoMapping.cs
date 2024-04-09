@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
 namespace APIRHIU.Data.Mappings
 {
     public class CapaEnvelopeEmpregadoMapping : IEntityTypeConfiguration<CapaEnvelopeEmpregado>
@@ -11,7 +10,7 @@ namespace APIRHIU.Data.Mappings
         {
             builder.ToTable("capa_envelope_empregado");
 
-            builder.HasKey(x => x.IdCapaEnvelopeEmpregado)
+            builder.HasKey(x => x.Id)
                 .HasName("id_capa_envelope_empregado");
 
             builder.Property(x => x.MatriculaEmpregado)

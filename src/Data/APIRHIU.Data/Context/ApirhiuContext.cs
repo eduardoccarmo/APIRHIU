@@ -9,6 +9,7 @@ namespace APIRHIU.Data.Context
 
         public DbSet<CapaEnvelopeEmpregado> CapaEnvelopes { get; set; }
         public DbSet<DocumentoEnvelopeEmpregado> DocumentoEnvelopeEmpregados { get; set; }
+        public DbSet<TokenAcessoUnico> TokenAcessos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
