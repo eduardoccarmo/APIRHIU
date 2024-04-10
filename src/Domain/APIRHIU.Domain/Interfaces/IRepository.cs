@@ -1,11 +1,16 @@
 ﻿using APIRHIU.Core.DomainObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace APIRHIU.Domain.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     {
-        Task Adicionar(TEntity entity);
+        Task<int> Adicionar(TEntity entity);
         Task<TEntity> ObterPorId(Guid id);
         Task<List<TEntity>> ObterTodos();
         Task Atualizar(TEntity entity);
