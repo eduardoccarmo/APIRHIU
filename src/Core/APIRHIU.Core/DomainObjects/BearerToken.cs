@@ -1,6 +1,4 @@
-﻿using APIRHIU.Core.DomainObjects;
-
-namespace APIRHIU.Domain.Models
+﻿namespace APIRHIU.Core.DomainObjects
 {
     public class BearerToken 
     {

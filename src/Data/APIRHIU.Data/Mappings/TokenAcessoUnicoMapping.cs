@@ -10,8 +10,10 @@ namespace APIRHIU.Data.Mappings
         {
             builder.ToTable("controle_token_autenticacao_unico");
 
-            builder.HasKey(t => t.Id)
-                .HasName("identificador_codigo_acesso");
+            builder.HasKey(t => t.Id);
+
+            builder.Property(x => x.Id)
+                .HasColumnName("identificador_codigo_acesso");
 
             builder.Property(t => t.CodigoTokenAcesso)
                 .HasColumnName("codigo_token_acesso");

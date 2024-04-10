@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\APIRHUI.Application\APIRHUI.Application.csproj" />
     <ProjectReference Include="..\..\Core\APIRHIU.Core\APIRHIU.Core.csproj" />
     <ProjectReference Include="..\..\Data\APIRHIU.Data\APIRHIU.Data.csproj" />
+    <ProjectReference Include="..\..\Domain\APIRHIU.Domain\APIRHIU.Domain.csproj" />
   </ItemGroup>
 
 </Project>

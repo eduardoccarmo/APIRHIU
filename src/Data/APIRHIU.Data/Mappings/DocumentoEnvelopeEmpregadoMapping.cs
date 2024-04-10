@@ -26,7 +26,8 @@ namespace APIRHIU.Data.Mappings
                 .HasColumnName("caminho_fisico_gravacao_documento");
 
             builder.HasOne(x => x.CapaEnvelopeEmpregado)
-                .WithMany(x => x.DocumentosEnvelope);
+                .WithMany(x => x.DocumentosEnvelope)
+                .HasForeignKey(x => x.Id);
         }
     }
 }

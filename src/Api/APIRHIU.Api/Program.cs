@@ -1,5 +1,7 @@
 using APIRHIU.Api.Configurations;
 using APIRHIU.Core.DomainObjects;
+using APIRHIU.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 
@@ -10,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<ApirhiuContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+DependencyInjection.RegisterServices(builder.Services);
+
 builder.Services.AddControllers()
     .AddJsonOptions(op =>
     {
@@ -17,7 +26,6 @@ builder.Services.AddControllers()
         op.JsonSerializerOptions.WriteIndented = true;
     });
 
-DependencyInjection.RegisterServices(builder.Services);
 
 var appSettings = $"appsettings.{builder.Environment.EnvironmentName}.json";
 

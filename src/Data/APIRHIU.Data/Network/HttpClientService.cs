@@ -1,5 +1,5 @@
 ﻿using APIRHIU.Core.DomainObjects;
-using APIRHIU.Data.Network.TokenService;
+using APIRHIU.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 
@@ -59,12 +59,14 @@ namespace APIRHIU.Data.Network
             }
             catch (HttpRequestException) { }
 
+            await _tokenService.GravarTokenAcesso(bearerToken);
+
             return bearerToken;
         }
 
         public async Task<RetornoUnico> ObterEnvelopeColaborador(string token)
         {
-            var ret =  new RetornoUnico();
+            var ret = new RetornoUnico();
 
             var body = new { cpf = "10902174630" };
 

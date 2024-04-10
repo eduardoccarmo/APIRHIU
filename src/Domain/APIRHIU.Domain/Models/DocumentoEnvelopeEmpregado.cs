@@ -1,16 +1,10 @@
 ﻿using APIRHIU.Core.DomainObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APIRHIU.Domain.Models
 {
     public class DocumentoEnvelopeEmpregado : Entity
     {
-        public DocumentoEnvelopeEmpregado(int idDocumentoEnvelopeEmpregado,
-                                          int idCapaEvelopeEmpregado,
+        public DocumentoEnvelopeEmpregado(int idCapaEvelopeEmpregado,
                                           string? nomeDocumento,
                                           string? codigoIdentificacaoDocumento,
                                           string? caminhoFisicoGravacaoDocumento)

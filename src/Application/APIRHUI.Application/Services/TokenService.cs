@@ -1,19 +1,24 @@
 ﻿using APIRHIU.Core.DomainObjects;
+using APIRHIU.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace APIRHIU.Data.Network.TokenService
+namespace APIRHIU.Domain.Models
 {
     public class TokenService : ITokenService
     {
         private readonly IOptions<AppSettings> _settings;
+        private readonly ITokenRepository _tokenRepository;
 
-        public TokenService(IOptions<AppSettings> settings)
+        public TokenService(IOptions<AppSettings> settings, 
+                            ITokenRepository tokenRepository)
         {
             _settings = settings;
+            _tokenRepository = tokenRepository;
         }
 
         public ClaimsIdentity GerarPayloadIntegracao()
@@ -48,6 +53,15 @@ namespace APIRHIU.Data.Network.TokenService
             token?.Payload.Remove("nbf");
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<bool> GravarTokenAcesso(BearerToken? token)
+        {
+            var dataExpiracaoToken = DateTime.Now.AddSeconds(token.expires_in);
+
+            var tokenAcessoUnico = new TokenAcessoUnico(token?.access_token, dataExpiracaoToken);
+
+            return await _tokenRepository.Adicionar(tokenAcessoUnico) > 0;       
         }
     }
 }
