@@ -3,6 +3,7 @@ using APIRHIU.Data.Network;
 using APIRHIU.Data.Repository;
 using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
+using APIRHUI.Application.AutoMapper;
 using APIRHUI.Application.Services;
 
 namespace APIRHIU.Api.Configurations
@@ -11,6 +12,13 @@ namespace APIRHIU.Api.Configurations
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            #region AutoMapper
+
+            services.AddAutoMapper(typeof(AutoMapperConfiguration));
+
+            #endregion
+
+
             #region DbContext
 
             services.AddScoped<ApirhiuContext>();
@@ -34,6 +42,7 @@ namespace APIRHIU.Api.Configurations
             #region Repositories
 
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<ICapaEnvelopeEmpregadoRepository, CapaEnvelopeEmpregadoRepository>();
 
             #endregion
         }

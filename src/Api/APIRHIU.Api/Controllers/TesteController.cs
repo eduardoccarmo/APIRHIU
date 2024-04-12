@@ -1,4 +1,5 @@
 ﻿using APIRHIU.Data.Network;
+using APIRHIU.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIRHIU.Api.Controllers
@@ -6,10 +7,13 @@ namespace APIRHIU.Api.Controllers
     public class TesteController : BaseController
     {
         private readonly IHttpClientService _httpClientService;
+        private readonly IProcessarDocumentoColaboradoService _service;
 
-        public TesteController(IHttpClientService httpClientService)
+        public TesteController(IHttpClientService httpClientService, 
+                               IProcessarDocumentoColaboradoService service)
         {
             _httpClientService = httpClientService;
+            _service = service;
         }
 
         [HttpGet]
@@ -23,15 +27,11 @@ namespace APIRHIU.Api.Controllers
 
         [HttpPost]
         [Route("teste/api")]
-        public async Task<IActionResult> teste2(string token)
+        public async Task<IActionResult> teste2(List<string> cpfs)
         {
-            var result = await _httpClientService.ObterEnvelopeColaborador(token);
+            var result = await _service.RecuperarEnvelopeColaboradorPlataformaUnico(cpfs);
 
             List<string>? listaDeIds = new List<string>();
-
-            result?.Data?.Envelopes?.First()?.Documents?.ForEach(x => listaDeIds.Add(x.UUID));
-
-            var doc = await _httpClientService.ObterDocumentoColaborador(result.Data.Envelopes.First().Documents.First().UUID);
 
             return Ok(result);
         }
