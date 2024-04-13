@@ -5,7 +5,17 @@ namespace APIRHUI.Application.Commands
 {
     public class InserirCapaEnvelopeCommand : Command
     {
-        public int IdCapaEnvelopeEmpregado { get; private set; }
+        public InserirCapaEnvelopeCommand(string? matriculaEmpregado, 
+                                          DateTime dataCriacaoEnvelope, 
+                                          string? situacaoEnvelope, 
+                                          string? codigoIdentificaoEnvelope)
+        {
+            MatriculaEmpregado = matriculaEmpregado;
+            DataCriacaoEnvelope = dataCriacaoEnvelope;
+            SituacaoEnvelope = situacaoEnvelope;
+            CodigoIdentificaoEnvelope = codigoIdentificaoEnvelope;
+        }
+
         public string? MatriculaEmpregado { get; private set; }
         public DateTime DataCriacaoEnvelope { get; private set; }
         public string? SituacaoEnvelope { get; private set; }

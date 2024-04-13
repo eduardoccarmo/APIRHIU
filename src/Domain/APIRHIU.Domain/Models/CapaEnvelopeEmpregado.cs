@@ -27,14 +27,38 @@ namespace APIRHIU.Domain.Models
         public string? SituacaoEnvelope { get; private set; }
         public string? CodigoIdentificaoEnvelope { get; private set; }
 
+        #region Relacionamentos do Entity Framework
+
+        public IReadOnlyCollection<DocumentoEnvelopeEmpregado>? DocumentosEnvelope { get =>  _documentosEnvelope?.ToList(); }
+
+        #endregion
+
+        #region Setters
+
         public void SetarMatricula(string? matriculaEmpregado)
         {
             MatriculaEmpregado = matriculaEmpregado;
         }
 
-        #region Relacionamentos do Entity Framework
+        public void SetarDataCriacaoEnvelope(DateTime dataCriacaoEnvelope)
+        {
+            DataCriacaoEnvelope = dataCriacaoEnvelope;
+        }
 
-        public IReadOnlyCollection<DocumentoEnvelopeEmpregado>? DocumentosEnvelope { get =>  _documentosEnvelope?.ToList(); }
+        public void SetarSituacaoEnvelope(string? situacao)
+        {
+            SituacaoEnvelope = situacao;
+        }
+
+        public void SetarCodigoIdentificaCaoEnvelope(string? codigoIdentificaoEnvelope)
+        {
+            CodigoIdentificaoEnvelope = codigoIdentificaoEnvelope;
+        }
+
+        public void PopularListaDocumentos(List<DocumentoEnvelopeEmpregado> documentos)
+        {
+            documentos.ForEach(x => _documentosEnvelope?.Add(x));
+        }
 
         #endregion
     }

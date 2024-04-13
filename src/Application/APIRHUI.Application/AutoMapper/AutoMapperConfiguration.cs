@@ -8,7 +8,7 @@ namespace APIRHUI.Application.AutoMapper
         {
             return new MapperConfiguration(x =>
             {
-                x.AddProfile(new DtoToDomain());
+                x.AddProfile(new DtoToCommand());
             });
         }
     }

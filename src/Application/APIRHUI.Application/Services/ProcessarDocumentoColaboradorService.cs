@@ -50,8 +50,6 @@ namespace APIRHUI.Application.Services
 
             RetornoUnico? data = await _client.ObterEnvelopeColaborador(access_token);
 
-            var capaEnvelope = _mapper.Map<CapaEnvelopeEmpregado>(data);
-
             return new List<CapaEnvelopeEmpregado>();
         }
     }

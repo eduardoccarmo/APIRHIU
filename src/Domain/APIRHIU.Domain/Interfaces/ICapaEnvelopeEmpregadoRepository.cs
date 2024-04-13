@@ -3,6 +3,6 @@
 namespace APIRHIU.Domain.Interfaces
 {
     public interface ICapaEnvelopeEmpregadoRepository : IRepository<CapaEnvelopeEmpregado>
-    {
+    { 
     }
 }
