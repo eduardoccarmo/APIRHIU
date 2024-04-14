@@ -1,5 +1,6 @@
 ﻿using APIRHIU.Core.DomainObjects;
 using APIRHIU.Domain.Models;
+using APIRHUI.Application.Commands;
 using AutoMapper;
 using System.ComponentModel;
 
@@ -9,28 +10,25 @@ namespace APIRHUI.Application.AutoMapper
     {
         public DtoToCommand()
         {
-            CreateMap<Envelope, CapaEnvelopeEmpregado>()
+            CreateMap<Envelope, InserirCapaEnvelopeCommand>()
                 .ConstructUsing((envelope, capaEnvelope) =>
                 {
-                    CapaEnvelopeEmpregado capaEnvelopeEmpregado = new CapaEnvelopeEmpregado();
+                    InserirCapaEnvelopeCommand command = new InserirCapaEnvelopeCommand(string.Empty,
+                                                                                        DateTime.Parse(envelope.CreatedDate),
+                                                                                        envelope.EnvelopeStatus,
+                                                                                        envelope.UUID);
 
-                    capaEnvelopeEmpregado.SetarMatricula(string.Empty);
-                    capaEnvelopeEmpregado.SetarDataCriacaoEnvelope(DateTime.Parse(envelope.CreatedDate));
-                    capaEnvelopeEmpregado.SetarCodigoIdentificaCaoEnvelope(envelope.UUID);
-                    capaEnvelopeEmpregado.SetarSituacaoEnvelope(envelope.EnvelopeStatus);
-                    
-                    return capaEnvelopeEmpregado;
-                }
-                );
+                    return command;
+                });
 
-            CreateMap<Document, DocumentoEnvelopeEmpregado>()
+            CreateMap<Document, InserirDocumentoEmpregadoCommand>()
                 .ConstructUsing((documentoEmpregadoUnico, documentoEmpregado) =>
                 {
-                    DocumentoEnvelopeEmpregado documento = new DocumentoEnvelopeEmpregado();
+                    InserirDocumentoEmpregadoCommand command = new InserirDocumentoEmpregadoCommand(documentoEmpregadoUnico.DocumentType,
+                                                                                                    documentoEmpregadoUnico.UUID,
+                                                                                                    string.Empty);
 
-                    documento.SetarNomeDocumento(documentoEmpregadoUnico.DocumentType);
-
-                    return documento;
+                    return command;
                 });
         }
     }

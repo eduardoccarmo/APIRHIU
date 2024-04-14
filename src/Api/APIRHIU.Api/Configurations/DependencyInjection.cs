@@ -1,10 +1,13 @@
-﻿using APIRHIU.Data.Context;
+﻿using APIRHIU.Core.Communication;
+using APIRHIU.Data.Context;
 using APIRHIU.Data.Network;
 using APIRHIU.Data.Repository;
 using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
 using APIRHUI.Application.AutoMapper;
+using APIRHUI.Application.Commands;
 using APIRHUI.Application.Services;
+using MediatR;
 
 namespace APIRHIU.Api.Configurations
 {
@@ -43,6 +46,15 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ICapaEnvelopeEmpregadoRepository, CapaEnvelopeEmpregadoRepository>();
+
+            #endregion
+
+            #region Mediatr
+
+            services.AddMediatR(typeof(Program));
+
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+            services.AddScoped<IRequestHandler<InserirCapaEnvelopeCommand, bool>, CapaEnvelopeCommandHandler>();
 
             #endregion
         }

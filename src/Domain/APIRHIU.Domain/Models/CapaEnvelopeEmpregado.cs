@@ -55,9 +55,11 @@ namespace APIRHIU.Domain.Models
             CodigoIdentificaoEnvelope = codigoIdentificaoEnvelope;
         }
 
-        public void PopularListaDocumentos(List<DocumentoEnvelopeEmpregado> documentos)
+        public void PopularListaDocumentos(DocumentoEnvelopeEmpregado documento, Guid idEnvelope)
         {
-            documentos.ForEach(x => _documentosEnvelope?.Add(x));
+            documento.AssociarIdCapaEnvelope(idEnvelope);
+
+            _documentosEnvelope?.Add(documento);
         }
 
         #endregion

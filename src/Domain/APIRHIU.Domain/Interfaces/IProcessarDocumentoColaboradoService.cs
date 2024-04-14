@@ -4,8 +4,6 @@ namespace APIRHIU.Domain.Interfaces
 {
     public interface IProcessarDocumentoColaboradoService
     {
-        Task<bool> PopularTabelasControleDocumento(List<CapaEnvelopeEmpregado> envelopes);
-
-        Task<List<CapaEnvelopeEmpregado>> RecuperarEnvelopeColaboradorPlataformaUnico(List<string> cpfs);
+        Task<List<CapaEnvelopeEmpregado>> GravarDadosControleIntegracao(List<string> cpfs);
     }
 }
