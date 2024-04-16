@@ -1,8 +1,6 @@
 ﻿using APIRHIU.Core.DomainObjects;
-using APIRHIU.Domain.Models;
 using APIRHUI.Application.Commands;
 using AutoMapper;
-using System.ComponentModel;
 
 namespace APIRHUI.Application.AutoMapper
 {
@@ -26,7 +24,8 @@ namespace APIRHUI.Application.AutoMapper
                 {
                     InserirDocumentoEmpregadoCommand command = new InserirDocumentoEmpregadoCommand(documentoEmpregadoUnico.DocumentType,
                                                                                                     documentoEmpregadoUnico.UUID,
-                                                                                                    string.Empty);
+                                                                                                    string.Empty,
+                                                                                                    DateTime.Parse(documentoEmpregadoUnico.CreatedDate));
 
                     return command;
                 });

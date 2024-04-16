@@ -4,7 +4,7 @@
     {
         public bool Success { get; set; }
         public string Message { get; set; } = string.Empty;
-        public Data? Data { get; set; }
+        public Data Data { get; set; } = new();
     }
 
     public class Data

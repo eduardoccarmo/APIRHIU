@@ -6,13 +6,17 @@ namespace APIRHIU.Domain.Models
     {
         #region Construtores
 
-        public DocumentoEnvelopeEmpregado(string? nomeDocumento,
+        public DocumentoEnvelopeEmpregado(Guid idCapaEnvelopeEmpregado,
+                                          string? nomeDocumento,
                                           string? codigoIdentificacaoDocumento,
-                                          string? caminhoFisicoGravacaoDocumento)
+                                          string? caminhoFisicoGravacaoDocumento,
+                                          DateTime dataInsercaoDocumento)
         {
+            IdCapaEvelopeEmpregado = idCapaEnvelopeEmpregado;
             NomeDocumento = nomeDocumento;
             CodigoIdentificacaoDocumento = codigoIdentificacaoDocumento;
             CaminhoFisicoGravacaoDocumento = caminhoFisicoGravacaoDocumento;
+            DataInsercaoDocumento = dataInsercaoDocumento;
         }
 
         public DocumentoEnvelopeEmpregado() { }

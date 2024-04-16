@@ -1,4 +1,5 @@
-﻿using APIRHIU.Core.DomainObjects;
+﻿using APIRHIU.Core.Communication;
+using APIRHIU.Core.DomainObjects;
 using APIRHIU.Data.Network;
 using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
@@ -11,13 +12,13 @@ namespace APIRHUI.Application.Services
     public class ProcessarDocumentoColaboradorService : IProcessarDocumentoColaboradoService
     {
         private readonly ICapaEnvelopeEmpregadoRepository _capaEnvelopeEmpregadoRepository;
-        private readonly IMediator _mediator;
+        private readonly IMediatorHandler _mediator;
         private readonly IHttpClientService _client;
         private readonly ITokenRepository _tokenRepository;
         private readonly IMapper _mapper;
 
         public ProcessarDocumentoColaboradorService(ICapaEnvelopeEmpregadoRepository capaEnvelopeEmpregadoRepository,
-                                                    IMediator mediator,
+                                                    IMediatorHandler mediator,
                                                     IHttpClientService client,
                                                     ITokenRepository tokenRepository,
                                                     IMapper mapper)
@@ -44,13 +45,15 @@ namespace APIRHUI.Application.Services
 
                 access_token = await _client.GerarBearerToken();
 
-            RetornoUnico? envelopeDocumentosColaboradorPlataformaUnico = await _client.ObterEnvelopeColaborador(access_token);
+            RetornoUnico envelopeDocumentosColaboradorPlataformaUnico = await _client.ObterEnvelopeColaborador(access_token);
 
-            foreach(var doc in envelopeDocumentosColaboradorPlataformaUnico.Data.Envelopes)
+            foreach(var envelope in envelopeDocumentosColaboradorPlataformaUnico.Data.Envelopes)
             {
-                InserirCapaEnvelopeCommand command = _mapper.Map<InserirCapaEnvelopeCommand>(doc);
+                InserirCapaEnvelopeCommand command = _mapper.Map<InserirCapaEnvelopeCommand>(envelope);
 
-                await _mediator.Send(command);
+                envelope.Documents?.ForEach(x => command.PopularListaDocumentos(_mapper.Map<InserirDocumentoEmpregadoCommand>(x)));
+
+                await _mediator.EnviarComando(command);
             }
 
             return new List<CapaEnvelopeEmpregado>();

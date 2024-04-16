@@ -46,6 +46,7 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ICapaEnvelopeEmpregadoRepository, CapaEnvelopeEmpregadoRepository>();
+            services.AddScoped<IDocumentoEnvelopeEmpregadoRepository, DocumentoEnvelopeEmpregadoRepository>();
 
             #endregion
 
@@ -55,6 +56,7 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<InserirCapaEnvelopeCommand, bool>, CapaEnvelopeCommandHandler>();
+            services.AddScoped<IRequestHandler<InserirDocumentoEmpregadoCommand, bool>, CapaEnvelopeCommandHandler>();
 
             #endregion
         }

@@ -1,4 +1,5 @@
 ﻿using APIRHIU.Core.Message;
+using APIRHIU.Domain.Models;
 using FluentValidation;
 
 namespace APIRHUI.Application.Commands
@@ -34,7 +35,7 @@ namespace APIRHUI.Application.Commands
         public DateTime DataCriacaoEnvelope { get; private set; }
         public string? SituacaoEnvelope { get; private set; }
         public string? CodigoIdentificaoEnvelope { get; private set; }
-        public IReadOnlyCollection<InserirDocumentoEmpregadoCommand> DocuDocumentosEnvelope => _documentosEnvelope.ToList();
+        public IReadOnlyCollection<InserirDocumentoEmpregadoCommand> DocumentosEnvelope => _documentosEnvelope.ToList();
 
         #endregion
 
@@ -45,6 +46,11 @@ namespace APIRHUI.Application.Commands
             ValidationResult = new InserirCapaEnvelopeCommandValidation().Validate(this);
 
             return ValidationResult.IsValid;
+        }
+
+        public void PopularListaDocumentos(InserirDocumentoEmpregadoCommand documento)
+        {
+            _documentosEnvelope?.Add(documento);
         }
 
         #endregion

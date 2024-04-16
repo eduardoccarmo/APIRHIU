@@ -10,11 +10,13 @@ namespace APIRHUI.Application.Commands
 
         public InserirDocumentoEmpregadoCommand(string? nomeDocumento,
                                                 string? codigoIdentificacaoDocumento,
-                                                string? caminhoFisicoGravacaoDocumento)
+                                                string? caminhoFisicoGravacaoDocumento,
+                                                DateTime dataInsercaoDocumento)
         {
             NomeDocumento = nomeDocumento;
             CodigoIdentificacaoDocumento = codigoIdentificacaoDocumento;
             CaminhoFisicoGravacaoDocumento = caminhoFisicoGravacaoDocumento;
+            DataInsercaoDocumento = dataInsercaoDocumento;
         }
 
         #endregion
@@ -28,6 +30,15 @@ namespace APIRHUI.Application.Commands
         public string? CaminhoFisicoGravacaoDocumento { get; private set; }
 
         #endregion
+
+        #region Setters
+
+        public void AssociarIdCapaEnvelope(Guid id)
+        {
+            IdCapaEvelopeEmpregado = id;
+        }
+
+        #endregion 
 
         #region Métodos 
 

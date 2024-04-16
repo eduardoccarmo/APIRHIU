@@ -1,33 +1,72 @@
-﻿using APIRHIU.Domain.Interfaces;
+﻿using APIRHIU.Core.Communication;
+using APIRHIU.Core.Message;
+using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
 using MediatR;
-using MediatR.Pipeline;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APIRHUI.Application.Commands
 {
-    public class CapaEnvelopeCommandHandler
-        : IRequestHandler<InserirCapaEnvelopeCommand, bool>
+    public class CapaEnvelopeCommandHandler :
+          IRequestHandler<InserirCapaEnvelopeCommand, bool>,
+          IRequestHandler<InserirDocumentoEmpregadoCommand, bool>
     {
         private readonly ICapaEnvelopeEmpregadoRepository _repository;
+        private readonly IDocumentoEnvelopeEmpregadoRepository _documentoEnvelopeEmpregadoRepository;
+        private readonly IMediatorHandler _mediator;
 
-        public CapaEnvelopeCommandHandler(ICapaEnvelopeEmpregadoRepository repository)
+        public CapaEnvelopeCommandHandler(ICapaEnvelopeEmpregadoRepository repository,
+                                          IDocumentoEnvelopeEmpregadoRepository documentoEnvelopeEmpregadoRepository,
+                                          IMediatorHandler mediator)
         {
             _repository = repository;
+            _documentoEnvelopeEmpregadoRepository = documentoEnvelopeEmpregadoRepository;
+            _mediator = mediator;
         }
 
         public async Task<bool> Handle(InserirCapaEnvelopeCommand request, CancellationToken cancellationToken)
         {
-            CapaEnvelopeEmpregado capaEnvelope = new CapaEnvelopeEmpregado(string.Empty, 
-                                                                           request.DataCriacaoEnvelope, 
-                                                                           request.SituacaoEnvelope, 
+            if (!ValidarComando(request)) return false;
+
+            CapaEnvelopeEmpregado capaEnvelope = new CapaEnvelopeEmpregado(string.Empty,
+                                                                           request.DataCriacaoEnvelope,
+                                                                           request.SituacaoEnvelope,
                                                                            request.CodigoIdentificaoEnvelope);
 
-            return await _repository.Adicionar(capaEnvelope) > 0;
+            bool comitIsValid = await _repository.Adicionar(capaEnvelope) > 0;
+
+            if (comitIsValid)
+            {
+                foreach (var doc in request.DocumentosEnvelope)
+                {
+                    doc.AssociarIdCapaEnvelope(capaEnvelope.Id);
+
+                    await _mediator.EnviarComando(doc);
+                }
+            }
+
+            return comitIsValid;
+        }
+
+        public async Task<bool> Handle(InserirDocumentoEmpregadoCommand request, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(request)) return false;
+
+            DocumentoEnvelopeEmpregado documento = new DocumentoEnvelopeEmpregado(request.IdCapaEvelopeEmpregado,
+                                                                                  request.NomeDocumento,
+                                                                                  request.CodigoIdentificacaoDocumento,
+                                                                                  string.Empty,
+                                                                                  request.DataInsercaoDocumento);
+
+            documento.AssociarIdCapaEnvelope(request.IdCapaEvelopeEmpregado);
+
+            return await _documentoEnvelopeEmpregadoRepository.Adicionar(documento) > 0; 
+        }
+
+        private bool ValidarComando(Command message)
+        {
+            if (message.EhValido()) return true;
+
+            return false;
         }
     }
 }
