@@ -4,18 +4,26 @@ namespace APIRHIU.Domain.Models
 {
     public class DocumentoEnvelopeEmpregado : Entity
     {
-        public DocumentoEnvelopeEmpregado(int idCapaEvelopeEmpregado,
+        #region Construtores
+
+        public DocumentoEnvelopeEmpregado(Guid idCapaEnvelopeEmpregado,
                                           string? nomeDocumento,
                                           string? codigoIdentificacaoDocumento,
-                                          string? caminhoFisicoGravacaoDocumento)
+                                          string? caminhoFisicoGravacaoDocumento,
+                                          DateTime dataInsercaoDocumento)
         {
-            IdCapaEvelopeEmpregado = idCapaEvelopeEmpregado;
+            IdCapaEvelopeEmpregado = idCapaEnvelopeEmpregado;
             NomeDocumento = nomeDocumento;
             CodigoIdentificacaoDocumento = codigoIdentificacaoDocumento;
             CaminhoFisicoGravacaoDocumento = caminhoFisicoGravacaoDocumento;
+            DataInsercaoDocumento = dataInsercaoDocumento;
         }
 
-        public int IdCapaEvelopeEmpregado { get; private set; }
+        public DocumentoEnvelopeEmpregado() { }
+
+        #endregion
+
+        public Guid IdCapaEvelopeEmpregado { get; private set; }
         public DateTime DataInsercaoDocumento { get; private set; }
         public string? NomeDocumento { get; private set; }
         public string? CodigoIdentificacaoDocumento { get; private set; }
@@ -24,6 +32,20 @@ namespace APIRHIU.Domain.Models
         #region Relacionamentos do Entity Framework
 
         public CapaEnvelopeEmpregado? CapaEnvelopeEmpregado { get; private set; }
+
+        #endregion
+
+        #region Setters
+
+        public void SetarNomeDocumento(string nomeDocumento)
+        {
+            NomeDocumento = nomeDocumento;
+        }
+
+        public void AssociarIdCapaEnvelope(Guid id)
+        {
+            IdCapaEvelopeEmpregado = id;
+        }
 
         #endregion
 

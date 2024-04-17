@@ -20,7 +20,7 @@ namespace APIRHIU.Data.Network
             _tokenService = tokenService;
         }
 
-        public async Task<BearerToken> GerarBearerToken()
+        public async Task<string?> GerarBearerToken()
         {
             BearerToken? bearerToken = new();
 
@@ -61,10 +61,10 @@ namespace APIRHIU.Data.Network
 
             await _tokenService.GravarTokenAcesso(bearerToken);
 
-            return bearerToken;
+            return bearerToken?.access_token;
         }
 
-        public async Task<RetornoUnico> ObterEnvelopeColaborador(string token)
+        public async Task<RetornoUnico?> ObterEnvelopeColaborador(string? token)
         {
             var ret = new RetornoUnico();
 

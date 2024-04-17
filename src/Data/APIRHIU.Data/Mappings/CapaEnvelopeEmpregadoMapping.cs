@@ -10,8 +10,10 @@ namespace APIRHIU.Data.Mappings
         {
             builder.ToTable("capa_envelope_empregado");
 
-            builder.HasKey(x => x.Id)
-                .HasName("id_capa_envelope_empregado");
+            builder.HasKey(x => x.Id);
+            
+            builder.Property(x => x.Id)
+                .HasColumnName("id_capa_envelope_empregado");
 
             builder.Property(x => x.MatriculaEmpregado)
                 .HasColumnName("matricula_empregado_envelope");
