@@ -8,7 +8,7 @@ namespace APIRHUI.Application.Commands
     {
         #region Propriedades Privadas
 
-        private IList<InserirDocumentoEmpregadoCommand> _documentosEnvelope;
+        private IList<DocumentoEnvelopeEmpregado> _documentosEnvelope;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace APIRHUI.Application.Commands
             SituacaoEnvelope = situacaoEnvelope;
             CodigoIdentificaoEnvelope = codigoIdentificaoEnvelope;
 
-            _documentosEnvelope = new List<InserirDocumentoEmpregadoCommand>();
+            _documentosEnvelope = new List<DocumentoEnvelopeEmpregado>();
         }
 
         #endregion
@@ -35,7 +35,7 @@ namespace APIRHUI.Application.Commands
         public DateTime DataCriacaoEnvelope { get; private set; }
         public string? SituacaoEnvelope { get; private set; }
         public string? CodigoIdentificaoEnvelope { get; private set; }
-        public IReadOnlyCollection<InserirDocumentoEmpregadoCommand> DocumentosEnvelope => _documentosEnvelope.ToList();
+        public IReadOnlyCollection<DocumentoEnvelopeEmpregado> DocumentosEnvelope => _documentosEnvelope.ToList();
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace APIRHUI.Application.Commands
             return ValidationResult.IsValid;
         }
 
-        public void PopularListaDocumentos(InserirDocumentoEmpregadoCommand documento)
+        public void PopularListaDocumentos(DocumentoEnvelopeEmpregado documento)
         {
             _documentosEnvelope?.Add(documento);
         }
@@ -60,7 +60,7 @@ namespace APIRHUI.Application.Commands
     {
         public InserirCapaEnvelopeCommandValidation()
         {
-
+            
         }
     }
 

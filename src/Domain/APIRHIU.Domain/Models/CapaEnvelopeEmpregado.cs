@@ -1,9 +1,8 @@
-﻿using APIRHIU.Core.DomainInterfaces;
-using APIRHIU.Core.DomainObjects;
+﻿using APIRHIU.Core.DomainObjects;
 
 namespace APIRHIU.Domain.Models
 {
-    public class CapaEnvelopeEmpregado : Entity, IAgregateRoot
+    public class CapaEnvelopeEmpregado : Entity
     {
         private readonly IList<DocumentoEnvelopeEmpregado>? _documentosEnvelope;
 
@@ -35,32 +34,15 @@ namespace APIRHIU.Domain.Models
 
         #region Setters
 
-        public void SetarMatricula(string? matriculaEmpregado)
-        {
-            MatriculaEmpregado = matriculaEmpregado;
-        }
+        public void SetarMatricula(string? matriculaEmpregado) => MatriculaEmpregado = matriculaEmpregado;
 
-        public void SetarDataCriacaoEnvelope(DateTime dataCriacaoEnvelope)
-        {
-            DataCriacaoEnvelope = dataCriacaoEnvelope;
-        }
+        public void SetarDataCriacaoEnvelope(DateTime dataCriacaoEnvelope) => DataCriacaoEnvelope = dataCriacaoEnvelope;
 
-        public void SetarSituacaoEnvelope(string? situacao)
-        {
-            SituacaoEnvelope = situacao;
-        }
+        public void SetarSituacaoEnvelope(string? situacao) => SituacaoEnvelope = situacao;
 
-        public void SetarCodigoIdentificaCaoEnvelope(string? codigoIdentificaoEnvelope)
-        {
-            CodigoIdentificaoEnvelope = codigoIdentificaoEnvelope;
-        }
+        public void SetarCodigoIdentificaCaoEnvelope(string? codigoIdentificaoEnvelope) => CodigoIdentificaoEnvelope = codigoIdentificaoEnvelope;
 
-        public void PopularListaDocumentos(DocumentoEnvelopeEmpregado documento, Guid idEnvelope)
-        {
-            documento.AssociarIdCapaEnvelope(idEnvelope);
-
-            _documentosEnvelope?.Add(documento);
-        }
+        public void PopularListaDocumentos(DocumentoEnvelopeEmpregado documento) => _documentosEnvelope?.Add(documento);
 
         #endregion
     }

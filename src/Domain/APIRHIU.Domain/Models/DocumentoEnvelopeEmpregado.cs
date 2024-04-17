@@ -6,13 +6,11 @@ namespace APIRHIU.Domain.Models
     {
         #region Construtores
 
-        public DocumentoEnvelopeEmpregado(Guid idCapaEnvelopeEmpregado,
-                                          string? nomeDocumento,
+        public DocumentoEnvelopeEmpregado(string? nomeDocumento,
                                           string? codigoIdentificacaoDocumento,
                                           string? caminhoFisicoGravacaoDocumento,
                                           DateTime dataInsercaoDocumento)
         {
-            IdCapaEvelopeEmpregado = idCapaEnvelopeEmpregado;
             NomeDocumento = nomeDocumento;
             CodigoIdentificacaoDocumento = codigoIdentificacaoDocumento;
             CaminhoFisicoGravacaoDocumento = caminhoFisicoGravacaoDocumento;
@@ -37,15 +35,15 @@ namespace APIRHIU.Domain.Models
 
         #region Setters
 
-        public void SetarNomeDocumento(string nomeDocumento)
-        {
-            NomeDocumento = nomeDocumento;
-        }
+        public void AssociarIdCapaEnvelope(Guid id) => IdCapaEvelopeEmpregado = id;
 
-        public void AssociarIdCapaEnvelope(Guid id)
-        {
-            IdCapaEvelopeEmpregado = id;
-        }
+        public void SetarDataInsercaoDocumento(DateTime data) => DataInsercaoDocumento = data;
+
+        public void SetarNomeDocumento(string nomeDocumento) => NomeDocumento = nomeDocumento;
+
+        public void SetarCodigoIdentificacaoDocumento(string codigoIdentificacaoDocumento) => CodigoIdentificacaoDocumento = codigoIdentificacaoDocumento;
+
+        public void SetarCaminhoFisicoArquivo(string caminhoFisicoGravacaoDocumento) => CaminhoFisicoGravacaoDocumento = caminhoFisicoGravacaoDocumento;
 
         #endregion
 

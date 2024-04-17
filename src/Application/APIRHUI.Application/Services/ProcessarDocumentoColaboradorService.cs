@@ -5,25 +5,21 @@ using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
 using APIRHUI.Application.Commands;
 using AutoMapper;
-using MediatR;
 
 namespace APIRHUI.Application.Services
 {
     public class ProcessarDocumentoColaboradorService : IProcessarDocumentoColaboradoService
     {
-        private readonly ICapaEnvelopeEmpregadoRepository _capaEnvelopeEmpregadoRepository;
         private readonly IMediatorHandler _mediator;
         private readonly IHttpClientService _client;
         private readonly ITokenRepository _tokenRepository;
         private readonly IMapper _mapper;
 
-        public ProcessarDocumentoColaboradorService(ICapaEnvelopeEmpregadoRepository capaEnvelopeEmpregadoRepository,
-                                                    IMediatorHandler mediator,
+        public ProcessarDocumentoColaboradorService(IMediatorHandler mediator,
                                                     IHttpClientService client,
                                                     ITokenRepository tokenRepository,
                                                     IMapper mapper)
         {
-            _capaEnvelopeEmpregadoRepository = capaEnvelopeEmpregadoRepository;
             _mediator = mediator;
             _client = client;
             _tokenRepository = tokenRepository;
@@ -51,12 +47,13 @@ namespace APIRHUI.Application.Services
             {
                 InserirCapaEnvelopeCommand command = _mapper.Map<InserirCapaEnvelopeCommand>(envelope);
 
-                envelope.Documents?.ForEach(x => command.PopularListaDocumentos(_mapper.Map<InserirDocumentoEmpregadoCommand>(x)));
+                //envelope.Documents?.ForEach(x => command.PopularListaDocumentos(_mapper.Map<InserirDocumentoEmpregadoCommand>(x)));
 
                 await _mediator.EnviarComando(command);
             }
 
             return new List<CapaEnvelopeEmpregado>();
+
         }
     }
 }

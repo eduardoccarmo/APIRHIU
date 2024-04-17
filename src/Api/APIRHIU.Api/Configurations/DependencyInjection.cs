@@ -56,7 +56,6 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<InserirCapaEnvelopeCommand, bool>, CapaEnvelopeCommandHandler>();
-            services.AddScoped<IRequestHandler<InserirDocumentoEmpregadoCommand, bool>, CapaEnvelopeCommandHandler>();
 
             #endregion
         }

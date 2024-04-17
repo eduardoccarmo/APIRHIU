@@ -3,6 +3,7 @@ using APIRHIU.Core.Message;
 using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
 using MediatR;
+using System.Runtime.CompilerServices;
 
 namespace APIRHUI.Application.Commands
 {
@@ -30,43 +31,23 @@ namespace APIRHUI.Application.Commands
             CapaEnvelopeEmpregado capaEnvelope = new CapaEnvelopeEmpregado(string.Empty,
                                                                            request.DataCriacaoEnvelope,
                                                                            request.SituacaoEnvelope,
-                                                                           request.CodigoIdentificaoEnvelope);
+                                                                           request.CodigoIdentificaoEnvelope);            
 
-            bool comitIsValid = await _repository.Adicionar(capaEnvelope) > 0;
-
-            if (comitIsValid)
+            
+            foreach (var doc in request.DocumentosEnvelope)
             {
-                foreach (var doc in request.DocumentosEnvelope)
-                {
-                    doc.AssociarIdCapaEnvelope(capaEnvelope.Id);
+                DocumentoEnvelopeEmpregado documento = new DocumentoEnvelopeEmpregado(doc.NomeDocumento,
+                                                                                      doc.CodigoIdentificacaoDocumento,
+                                                                                      string.Empty,
+                                                                                      doc.DataInsercaoDocumento);
+                documento.AssociarIdCapaEnvelope(capaEnvelope.Id);
 
-                    await _mediator.EnviarComando(doc);
-                }
+                capaEnvelope.PopularListaDocumentos(documento);
+                
             }
 
-            return comitIsValid;
+            return await _repository.Adicionar(capaEnvelope) > 0;
         }
 
-        public async Task<bool> Handle(InserirDocumentoEmpregadoCommand request, CancellationToken cancellationToken)
-        {
-            if (!ValidarComando(request)) return false;
-
-            DocumentoEnvelopeEmpregado documento = new DocumentoEnvelopeEmpregado(request.IdCapaEvelopeEmpregado,
-                                                                                  request.NomeDocumento,
-                                                                                  request.CodigoIdentificacaoDocumento,
-                                                                                  string.Empty,
-                                                                                  request.DataInsercaoDocumento);
-
-            documento.AssociarIdCapaEnvelope(request.IdCapaEvelopeEmpregado);
-
-            return await _documentoEnvelopeEmpregadoRepository.Adicionar(documento) > 0; 
-        }
-
-        private bool ValidarComando(Command message)
-        {
-            if (message.EhValido()) return true;
-
-            return false;
-        }
     }
 }

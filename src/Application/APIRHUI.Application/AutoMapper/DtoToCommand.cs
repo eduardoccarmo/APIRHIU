@@ -1,6 +1,8 @@
 ﻿using APIRHIU.Core.DomainObjects;
+using APIRHIU.Domain.Models;
 using APIRHUI.Application.Commands;
 using AutoMapper;
+using AutoMapper.Internal.Mappers;
 
 namespace APIRHUI.Application.AutoMapper
 {
@@ -16,19 +18,29 @@ namespace APIRHUI.Application.AutoMapper
                                                                                         envelope.EnvelopeStatus,
                                                                                         envelope.UUID);
 
+                    foreach (var item in envelope?.Documents)
+                    {
+                        DocumentoEnvelopeEmpregado doc = new DocumentoEnvelopeEmpregado(item.DocumentType,
+                                                                                        item.UUID,
+                                                                                        string.Empty,
+                                                                                        DateTime.Parse(item.CreatedDate));
+
+                        command.PopularListaDocumentos(doc);
+                    }
+
                     return command;
                 });
 
-            CreateMap<Document, InserirDocumentoEmpregadoCommand>()
-                .ConstructUsing((documentoEmpregadoUnico, documentoEmpregado) =>
-                {
-                    InserirDocumentoEmpregadoCommand command = new InserirDocumentoEmpregadoCommand(documentoEmpregadoUnico.DocumentType,
-                                                                                                    documentoEmpregadoUnico.UUID,
-                                                                                                    string.Empty,
-                                                                                                    DateTime.Parse(documentoEmpregadoUnico.CreatedDate));
+            //CreateMap<Document, DocumentoEnvelopeEmpregado>()
+            //    .ConstructUsing((documentoEmpregadoUnico, documentoEmpregado) =>
+            //    {
+            //        DocumentoEnvelopeEmpregado command = new DocumentoEnvelopeEmpregado(documentoEmpregadoUnico.DocumentType,
+            //                                                                            documentoEmpregadoUnico.UUID,
+            //                                                                            string.Empty,
+            //                                                                            DateTime.Parse(documentoEmpregadoUnico.CreatedDate));
 
-                    return command;
-                });
+            //        return command;
+            //    });
         }
     }
 }
