@@ -46,7 +46,6 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ICapaEnvelopeEmpregadoRepository, CapaEnvelopeEmpregadoRepository>();
-            services.AddScoped<IDocumentoEnvelopeEmpregadoRepository, DocumentoEnvelopeEmpregadoRepository>();
 
             #endregion
 

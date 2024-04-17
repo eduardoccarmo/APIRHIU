@@ -8,8 +8,7 @@ using System.Runtime.CompilerServices;
 namespace APIRHUI.Application.Commands
 {
     public class CapaEnvelopeCommandHandler :
-          IRequestHandler<InserirCapaEnvelopeCommand, bool>,
-          IRequestHandler<InserirDocumentoEmpregadoCommand, bool>
+          IRequestHandler<InserirCapaEnvelopeCommand, bool>
     {
         private readonly ICapaEnvelopeEmpregadoRepository _repository;
         private readonly IDocumentoEnvelopeEmpregadoRepository _documentoEnvelopeEmpregadoRepository;
@@ -49,5 +48,11 @@ namespace APIRHUI.Application.Commands
             return await _repository.Adicionar(capaEnvelope) > 0;
         }
 
+        private bool ValidarComando(Command command)
+        {
+            if (command.EhValido()) return true;
+
+            return false;
+        }
     }
 }
