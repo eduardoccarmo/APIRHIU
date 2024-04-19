@@ -20,7 +20,6 @@ namespace APIRHIU.Data.Repository
         public virtual async Task Adicionar(TEntity entity)
         {
             await DbSet.AddAsync(entity);
-            //return await SaveChanges();
         }
 
         public virtual async Task Atualizar(TEntity entity)

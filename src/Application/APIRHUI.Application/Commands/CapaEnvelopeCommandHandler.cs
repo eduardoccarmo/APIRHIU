@@ -36,6 +36,8 @@ namespace APIRHUI.Application.Commands
                 capaEnvelope.PopularListaDocumentos(doc);
             }
 
+            await _repository.Adicionar(capaEnvelope);
+
             return await _repository.SaveChanges() > 0;
         }
 
