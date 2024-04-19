@@ -14,9 +14,9 @@ namespace APIRHUI.Application.Commands
 
         #region Construtores
 
-        public InserirCapaEnvelopeCommand(string? matriculaEmpregado, 
-                                          DateTime dataCriacaoEnvelope, 
-                                          string? situacaoEnvelope, 
+        public InserirCapaEnvelopeCommand(string? matriculaEmpregado,
+                                          DateTime dataCriacaoEnvelope,
+                                          string? situacaoEnvelope,
                                           string? codigoIdentificaoEnvelope)
         {
             MatriculaEmpregado = matriculaEmpregado;
@@ -60,8 +60,13 @@ namespace APIRHUI.Application.Commands
     {
         public InserirCapaEnvelopeCommandValidation()
         {
-            
+            RuleFor(x => x.CodigoIdentificaoEnvelope)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("O codigo de identificação do envelope não pode ser nulo ou vazio.");
+
+            //RuleForEach(x => x.DocumentosEnvelope)
+            //    .SetValidator(new InserirDocumentoEnvelopeCommandValidation());
         }
     }
-
 }

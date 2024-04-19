@@ -1,4 +1,5 @@
 ﻿using APIRHIU.Core.Message;
+using APIRHIU.Core.Message.CommomMessage;
 using MediatR;
 
 namespace APIRHIU.Core.Communication
@@ -15,6 +16,11 @@ namespace APIRHIU.Core.Communication
         public async Task<bool> EnviarComando<T>(T comando) where T : Command
         {
             return await _mediator.Send(comando);
+        }
+
+        public async Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification
+        {
+            await _mediator.Publish(notificacao);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using APIRHIU.Core.DomainInterfaces;
-using APIRHIU.Core.DomainObjects;
+﻿using APIRHIU.Core.DomainObjects;
 
 namespace APIRHIU.Domain.Models
 {

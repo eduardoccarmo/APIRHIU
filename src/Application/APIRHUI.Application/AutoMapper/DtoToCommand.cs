@@ -18,29 +18,19 @@ namespace APIRHUI.Application.AutoMapper
                                                                                         envelope.EnvelopeStatus,
                                                                                         envelope.UUID);
 
-                    foreach (var item in envelope?.Documents)
-                    {
-                        DocumentoEnvelopeEmpregado doc = new DocumentoEnvelopeEmpregado(item.DocumentType,
-                                                                                        item.UUID,
-                                                                                        string.Empty,
-                                                                                        DateTime.Parse(item.CreatedDate));
-
-                        command.PopularListaDocumentos(doc);
-                    }
-
                     return command;
                 });
 
-            //CreateMap<Document, DocumentoEnvelopeEmpregado>()
-            //    .ConstructUsing((documentoEmpregadoUnico, documentoEmpregado) =>
-            //    {
-            //        DocumentoEnvelopeEmpregado command = new DocumentoEnvelopeEmpregado(documentoEmpregadoUnico.DocumentType,
-            //                                                                            documentoEmpregadoUnico.UUID,
-            //                                                                            string.Empty,
-            //                                                                            DateTime.Parse(documentoEmpregadoUnico.CreatedDate));
+            CreateMap<Document, DocumentoEnvelopeEmpregado>()
+                .ConstructUsing((documentoEmpregadoUnico, documentoEmpregado) =>
+                {
+                    DocumentoEnvelopeEmpregado command = new DocumentoEnvelopeEmpregado(documentoEmpregadoUnico.DocumentType,
+                                                                                        documentoEmpregadoUnico.UUID,
+                                                                                        string.Empty,
+                                                                                        DateTime.Parse(documentoEmpregadoUnico.CreatedDate));
 
-            //        return command;
-            //    });
+                    return command;
+                });
         }
     }
 }

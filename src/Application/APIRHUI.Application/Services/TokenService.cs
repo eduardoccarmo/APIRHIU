@@ -60,7 +60,9 @@ namespace APIRHIU.Domain.Models
 
             var tokenAcessoUnico = new TokenAcessoUnico(token?.access_token, dataExpiracaoToken);
 
-            return await _tokenRepository.Adicionar(tokenAcessoUnico) > 0;       
+            await _tokenRepository.Adicionar(tokenAcessoUnico);
+
+            return await _tokenRepository.SaveChanges() > 0;
         }
     }
 }

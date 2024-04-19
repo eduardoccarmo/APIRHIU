@@ -26,6 +26,10 @@ namespace APIRHIU.Data.Mappings
 
             builder.Property(x => x.CodigoIdentificaoEnvelope)
                 .HasColumnName("codigo_identificacao_envelope");
+
+            builder.HasMany(x => x.DocumentosEnvelope)
+                .WithOne(x => x.CapaEnvelopeEmpregado)
+                .HasForeignKey(x => x.IdCapaEvelopeEmpregado);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace APIRHIU.Core.Message
 {
     public abstract class Command : Mensagem, IRequest<bool>
     {
-        public ValidationResult? ValidationResult { get; set; }
+        public ValidationResult ValidationResult { get; set; } = new ValidationResult();
 
         public virtual bool EhValido()
         {
