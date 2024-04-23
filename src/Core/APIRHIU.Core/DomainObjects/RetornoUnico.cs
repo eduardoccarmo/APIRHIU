@@ -40,8 +40,8 @@
         public string UUID { get; set; } = string.Empty;
         public string ExpirationDate { get; set; } = string.Empty;
         public bool HasFrame { get; set; }
-        public List<Document>? Documents { get; set; }
-        public List<object>? EnvelopeTags { get; set; }
+        public List<Document> Documents { get; set; } = new List<Document>();
+        public List<object> EnvelopeTags { get; set; } = new List<object>();
         public bool RequireGeolocation { get; set; }
     }
 

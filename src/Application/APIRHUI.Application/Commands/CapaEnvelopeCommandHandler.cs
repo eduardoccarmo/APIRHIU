@@ -12,12 +12,15 @@ namespace APIRHUI.Application.Commands
     {
         private readonly ICapaEnvelopeEmpregadoRepository _repository;
         private readonly IMediatorHandler _mediator;
+        private readonly IUnityOfWork _uow;
 
         public CapaEnvelopeCommandHandler(ICapaEnvelopeEmpregadoRepository repository,
-                                          IMediatorHandler mediator)
+                                          IMediatorHandler mediator,
+                                          IUnityOfWork uow)
         {
             _repository = repository;
             _mediator = mediator;
+            _uow = uow;
         }
 
         public async Task<bool> Handle(InserirCapaEnvelopeCommand request, CancellationToken cancellationToken)
@@ -28,17 +31,18 @@ namespace APIRHUI.Application.Commands
                                                                            request.DataCriacaoEnvelope,
                                                                            request.SituacaoEnvelope,
                                                                            request.CodigoIdentificaoEnvelope);
+            _repository.Adicionar(capaEnvelope);
 
             foreach (var doc in request.DocumentosEnvelope)
             {
                 doc.AssociarIdCapaEnvelope(capaEnvelope.Id);
 
                 capaEnvelope.PopularListaDocumentos(doc);
+
+                _repository.AdicionarDocumentoCapaEnvelope(doc);
             }
 
-            await _repository.Adicionar(capaEnvelope);
-
-            return await _repository.SaveChanges() > 0;
+            return await _uow.Commit();
         }
 
         private bool ValidarComando(Command command)

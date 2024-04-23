@@ -18,16 +18,15 @@ namespace APIRHUI.Application.AutoMapper
                                                                                         envelope.EnvelopeStatus,
                                                                                         envelope.UUID);
 
-                    return command;
-                });
+                    foreach (var doc in envelope.Documents)
+                    {
+                        DocumentoEnvelopeEmpregado documento = new DocumentoEnvelopeEmpregado(doc.DocumentType,
+                                                                                              doc.UUID,
+                                                                                              string.Empty,
+                                                                                              DateTime.Parse(doc.CreatedDate));
 
-            CreateMap<Document, DocumentoEnvelopeEmpregado>()
-                .ConstructUsing((documentoEmpregadoUnico, documentoEmpregado) =>
-                {
-                    DocumentoEnvelopeEmpregado command = new DocumentoEnvelopeEmpregado(documentoEmpregadoUnico.DocumentType,
-                                                                                        documentoEmpregadoUnico.UUID,
-                                                                                        string.Empty,
-                                                                                        DateTime.Parse(documentoEmpregadoUnico.CreatedDate));
+                        command.PopularListaDocumentos(documento);
+                    }
 
                     return command;
                 });

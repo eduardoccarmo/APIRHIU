@@ -2,6 +2,7 @@
 using APIRHIU.Data.Context;
 using APIRHIU.Data.Network;
 using APIRHIU.Data.Repository;
+using APIRHIU.Data.UoW;
 using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
 using APIRHUI.Application.AutoMapper;
@@ -46,6 +47,7 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ICapaEnvelopeEmpregadoRepository, CapaEnvelopeEmpregadoRepository>();
+            services.AddScoped<IUnityOfWork, UnityOfWork>();
 
             #endregion
 

@@ -47,13 +47,12 @@ namespace APIRHUI.Application.Services
             {
                 InserirCapaEnvelopeCommand command = _mapper.Map<InserirCapaEnvelopeCommand>(envelope);
 
-                envelope.Documents?.ForEach(x => command.PopularListaDocumentos(_mapper.Map<DocumentoEnvelopeEmpregado>(x)));
+                //envelope.Documents?.ForEach(x => command.PopularListaDocumentos(_mapper.Map<DocumentoEnvelopeEmpregado>(x)));
 
                 await _mediator.EnviarComando(command);
             }
 
             return new List<CapaEnvelopeEmpregado>();
-
         }
     }
 }

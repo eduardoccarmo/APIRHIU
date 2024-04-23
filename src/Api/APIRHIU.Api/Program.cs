@@ -15,8 +15,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApirhiuContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-
-    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
 });
 
 DependencyInjection.RegisterServices(builder.Services);

@@ -5,7 +5,7 @@ namespace APIRHIU.Data.Context
 {
     public class ApirhiuContext : DbContext
     {
-        public ApirhiuContext(DbContextOptions<ApirhiuContext> options) : base (options) { }
+        public ApirhiuContext(DbContextOptions<ApirhiuContext> options) : base (options) {}
 
         public DbSet<CapaEnvelopeEmpregado> CapaEnvelopes { get; set; }
         public DbSet<DocumentoEnvelopeEmpregado> DocumentoEnvelopeEmpregados { get; set; }
@@ -14,6 +14,16 @@ namespace APIRHIU.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApirhiuContext).Assembly);
+        }
+
+        public void DesativarDeteccaoAutomaticaDeMudancas()
+        {
+            ChangeTracker.AutoDetectChangesEnabled = false;
+        }
+
+        public void AtivarDeteccaoAutomaticaDeMudancas()
+        {
+            ChangeTracker.AutoDetectChangesEnabled = true;
         }
     }
 }
