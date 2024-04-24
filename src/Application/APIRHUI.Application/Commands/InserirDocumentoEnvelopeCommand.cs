@@ -1,5 +1,4 @@
 ﻿using APIRHIU.Core.Message;
-using APIRHIU.Domain.Models;
 using FluentValidation;
 
 namespace APIRHUI.Application.Commands

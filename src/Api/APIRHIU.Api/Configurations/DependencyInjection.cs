@@ -1,4 +1,5 @@
 ﻿using APIRHIU.Core.Communication;
+using APIRHIU.Core.Message.CommomMessage;
 using APIRHIU.Data.Context;
 using APIRHIU.Data.Network;
 using APIRHIU.Data.Repository;
@@ -57,6 +58,7 @@ namespace APIRHIU.Api.Configurations
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<InserirCapaEnvelopeCommand, bool>, CapaEnvelopeCommandHandler>();
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             #endregion
         }

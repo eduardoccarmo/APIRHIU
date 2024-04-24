@@ -65,8 +65,24 @@ namespace APIRHUI.Application.Commands
                 .NotEmpty()
                 .WithMessage("O codigo de identificação do envelope não pode ser nulo ou vazio.");
 
-            //RuleForEach(x => x.DocumentosEnvelope)
-            //    .SetValidator(new InserirDocumentoEnvelopeCommandValidation());
+            RuleForEach(x => x.DocumentosEnvelope)
+                .SetValidator(new DocumentoEmpregadoValidation());
+        }
+    }
+
+    public class DocumentoEmpregadoValidation : AbstractValidator<DocumentoEnvelopeEmpregado>
+    {
+        public DocumentoEmpregadoValidation()
+        {
+            RuleFor(x => x.CodigoIdentificacaoDocumento)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("O codigo de identificação do documento não pode ser nulo ou vazio.");
+
+            RuleFor(x => x.NomeDocumento)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("O nome do documento não pode ser nulo ou vazio.");
         }
     }
 }

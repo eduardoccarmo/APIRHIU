@@ -43,11 +43,9 @@ namespace APIRHUI.Application.Services
 
             RetornoUnico envelopeDocumentosColaboradorPlataformaUnico = await _client.ObterEnvelopeColaborador(access_token);
 
-            foreach(var envelope in envelopeDocumentosColaboradorPlataformaUnico.Data.Envelopes)
+            foreach (var envelope in envelopeDocumentosColaboradorPlataformaUnico.Data.Envelopes)
             {
                 InserirCapaEnvelopeCommand command = _mapper.Map<InserirCapaEnvelopeCommand>(envelope);
-
-                //envelope.Documents?.ForEach(x => command.PopularListaDocumentos(_mapper.Map<DocumentoEnvelopeEmpregado>(x)));
 
                 await _mediator.EnviarComando(command);
             }

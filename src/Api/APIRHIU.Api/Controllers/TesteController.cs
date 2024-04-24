@@ -1,5 +1,7 @@
-﻿using APIRHIU.Data.Network;
+﻿using APIRHIU.Core.Message.CommomMessage;
+using APIRHIU.Data.Network;
 using APIRHIU.Domain.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIRHIU.Api.Controllers
@@ -10,7 +12,8 @@ namespace APIRHIU.Api.Controllers
         private readonly IProcessarDocumentoColaboradoService _service;
 
         public TesteController(IHttpClientService httpClientService, 
-                               IProcessarDocumentoColaboradoService service)
+                               IProcessarDocumentoColaboradoService service,
+                               INotificationHandler<DomainNotification> domainNotificationHandler) : base(domainNotificationHandler)
         {
             _httpClientService = httpClientService;
             _service = service;
@@ -33,7 +36,7 @@ namespace APIRHIU.Api.Controllers
 
             List<string>? listaDeIds = new List<string>();
 
-            return Ok(result);
+            return CustomResponse();
         }
     }
 }

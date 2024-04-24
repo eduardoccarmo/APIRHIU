@@ -2,7 +2,6 @@
 using APIRHIU.Domain.Models;
 using APIRHUI.Application.Commands;
 using AutoMapper;
-using AutoMapper.Internal.Mappers;
 
 namespace APIRHUI.Application.AutoMapper
 {
