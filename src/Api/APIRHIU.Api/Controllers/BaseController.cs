@@ -22,8 +22,8 @@ namespace APIRHIU.Api.Controllers
                 return Ok(new
                 {
                     sucesso = true,
-                    statusCode = HttpStatusCode.OK
-                });
+                    statusCode = statusCode
+                }) ;
             }
 
             return BadRequest(new
