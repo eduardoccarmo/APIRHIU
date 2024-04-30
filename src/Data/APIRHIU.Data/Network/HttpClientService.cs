@@ -1,6 +1,7 @@
 ﻿using APIRHIU.Core.DomainObjects;
 using APIRHIU.Domain.Interfaces;
 using Microsoft.Extensions.Options;
+using System.IO.MemoryMappedFiles;
 using System.Net.Http.Headers;
 
 namespace APIRHIU.Data.Network
@@ -97,7 +98,7 @@ namespace APIRHIU.Data.Network
             return ret;
         }
 
-        public async Task<string> ObterDocumentoColaborador(string uiid)
+        public async Task<byte[]> ObterDocumentoColaborador(string uiid)
         {
 
             var message = new HttpRequestMessage
@@ -108,11 +109,9 @@ namespace APIRHIU.Data.Network
 
             using var response = await _httpClient.SendAsync(message);
 
-            var teste = await response.Content.ReadAsByteArrayAsync();
-
-            File.WriteAllBytes("C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\testeDocUnico.pdf", teste);
-
-            return string.Empty;
+            byte[] byteArrayArquivoEmpregado = await response.Content.ReadAsByteArrayAsync();
+            
+            return byteArrayArquivoEmpregado;
         }
     }
 }

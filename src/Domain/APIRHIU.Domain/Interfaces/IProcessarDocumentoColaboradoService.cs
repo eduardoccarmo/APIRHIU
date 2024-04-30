@@ -4,6 +4,8 @@ namespace APIRHIU.Domain.Interfaces
 {
     public interface IProcessarDocumentoColaboradoService
     {
-        Task<List<CapaEnvelopeEmpregado>> GravarDadosControleIntegracao(List<string> cpfs);
+        Task<List<CapaEnvelopeEmpregado>> ProcessarDadosEnvelopeEmpregado(List<string> cpfs);
+
+        Task DisponibilizarDocumentoEmpregadoNoFileServer(List<CapaEnvelopeEmpregado> capas);
     }
 }

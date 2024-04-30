@@ -32,7 +32,7 @@ namespace APIRHIU.Api.Controllers
         [Route("teste/api")]
         public async Task<IActionResult> teste2(List<string> cpfs)
         {
-            var result = await _service.GravarDadosControleIntegracao(cpfs);
+            var result = await _service.ProcessarDadosEnvelopeEmpregado(cpfs);
 
             List<string>? listaDeIds = new List<string>();
 
