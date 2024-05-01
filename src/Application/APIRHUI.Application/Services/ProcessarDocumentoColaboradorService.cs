@@ -40,8 +40,8 @@ namespace APIRHUI.Application.Services
             foreach (var capaEnvelopeEmpregado in capas)
             {
                 string? caminhoArquivo = @_configuration.Value.CaminhoBaseGravacaoDocumentoEmpregado
-                                             + "\\" + capaEnvelopeEmpregado.Id
-                                             + "\\" + capaEnvelopeEmpregado.CodigoIdentificaoEnvelope;
+                                             + "\\" + capaEnvelopeEmpregado.MatriculaEmpregado
+                                             + "\\" + capaEnvelopeEmpregado.Id;
 
                 if (!Directory.Exists(caminhoArquivo))
                     Directory.CreateDirectory(caminhoArquivo);
@@ -50,9 +50,11 @@ namespace APIRHUI.Application.Services
                 {
                     byte[] hashCodeDocumento = await _client.ObterDocumentoColaborador(documento.CodigoIdentificacaoDocumento);
 
-                    //caminhoArquivo += @$"\{documento.NomeDocumento}.pdf";
+                    File.WriteAllBytes(caminhoArquivo + @$"\{documento.CodigoIdentificacaoDocumento} - {documento.NomeDocumento}.pdf", hashCodeDocumento);
 
-                    File.WriteAllBytes(caminhoArquivo + @$"\{documento.NomeDocumento}.pdf", hashCodeDocumento);
+                    documento.SetarCaminhoFisicoArquivo(caminhoArquivo + @$"\{documento.CodigoIdentificacaoDocumento} - {documento.NomeDocumento}.pdf");
+
+                    _capaEnvelopeRepository.AtualizaDocumentoEmpregado(documento);
                 }
             }
         }

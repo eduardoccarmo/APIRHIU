@@ -1,7 +1,6 @@
 ﻿using APIRHIU.Core.DomainObjects;
 using APIRHIU.Domain.Interfaces;
 using Microsoft.Extensions.Options;
-using System.IO.MemoryMappedFiles;
 using System.Net.Http.Headers;
 
 namespace APIRHIU.Data.Network

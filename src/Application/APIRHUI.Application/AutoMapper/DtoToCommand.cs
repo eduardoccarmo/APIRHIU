@@ -12,7 +12,7 @@ namespace APIRHUI.Application.AutoMapper
             CreateMap<Envelope, InserirCapaEnvelopeCommand>()
                 .ConstructUsing((envelope, capaEnvelope) =>
                 {
-                    InserirCapaEnvelopeCommand command = new InserirCapaEnvelopeCommand(string.Empty,
+                    InserirCapaEnvelopeCommand command = new InserirCapaEnvelopeCommand("3040038",
                                                                                         DateTime.Parse(envelope.CreatedDate),
                                                                                         envelope.EnvelopeStatus,
                                                                                         envelope.UUID);

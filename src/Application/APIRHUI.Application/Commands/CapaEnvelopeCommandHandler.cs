@@ -8,7 +8,8 @@ using MediatR;
 namespace APIRHUI.Application.Commands
 {
     public class CapaEnvelopeCommandHandler :
-          IRequestHandler<InserirCapaEnvelopeCommand, bool>
+          IRequestHandler<InserirCapaEnvelopeCommand, bool>,
+          IRequestHandler<AtualizarCaminhoDocumentoEmpregadoCommand, bool>
     {
         private readonly ICapaEnvelopeEmpregadoRepository _repository;
         private readonly IMediatorHandler _mediator;
@@ -43,6 +44,21 @@ namespace APIRHUI.Application.Commands
             }
 
             return await _uow.Commit();
+        }
+
+        public async Task<bool> Handle(AtualizarCaminhoDocumentoEmpregadoCommand request, CancellationToken cancellationToken)
+        {
+            if (!ValidarComando(request)) return false;
+
+            DocumentoEnvelopeEmpregado? documento = await _repository.ObterDocumentPorId(request.IdDocumentoEmpregado);
+
+            documento?.SetarCaminhoFisicoArquivo(request.CaminhoDocumentoEmpregado);
+
+            _repository.AtualizarDocumentoEmpregado(documento);
+
+            await _uow.Commit(); 
+
+            return true;
         }
 
         private bool ValidarComando(Command command)
