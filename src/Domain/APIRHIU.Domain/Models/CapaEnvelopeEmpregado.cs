@@ -4,11 +4,11 @@ namespace APIRHIU.Domain.Models
 {
     public class CapaEnvelopeEmpregado : Entity
     {
-        private readonly IList<DocumentoEnvelopeEmpregado>? _documentosEnvelope;
+        private readonly IList<DocumentoEnvelopeEmpregado> _documentosEnvelope;
 
-        public CapaEnvelopeEmpregado(string? matriculaEmpregado, 
-                                     DateTime dataCriacaoEnvelope, 
-                                     string? situacaoEnvelope, 
+        public CapaEnvelopeEmpregado(string? matriculaEmpregado,
+                                     DateTime dataCriacaoEnvelope,
+                                     string? situacaoEnvelope,
                                      string? codigoIdentificaoEnvelope)
         {
             MatriculaEmpregado = matriculaEmpregado;
@@ -19,7 +19,10 @@ namespace APIRHIU.Domain.Models
             _documentosEnvelope = new List<DocumentoEnvelopeEmpregado>();
         }
 
-        public CapaEnvelopeEmpregado() { }
+        public CapaEnvelopeEmpregado()
+        {
+            _documentosEnvelope = new List<DocumentoEnvelopeEmpregado>();
+        }
 
         public string? MatriculaEmpregado { get; private set; }
         public DateTime DataCriacaoEnvelope { get; private set; }
@@ -28,7 +31,7 @@ namespace APIRHIU.Domain.Models
 
         #region Relacionamentos do Entity Framework
 
-        public IReadOnlyCollection<DocumentoEnvelopeEmpregado>? DocumentosEnvelope { get =>  _documentosEnvelope?.ToList(); }
+        public IReadOnlyCollection<DocumentoEnvelopeEmpregado> DocumentosEnvelope { get => _documentosEnvelope.ToList(); }
 
         #endregion
 

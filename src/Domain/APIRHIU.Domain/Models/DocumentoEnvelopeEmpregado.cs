@@ -6,9 +6,9 @@ namespace APIRHIU.Domain.Models
     {
         #region Construtores
 
-        public DocumentoEnvelopeEmpregado(string? nomeDocumento,
-                                          string? codigoIdentificacaoDocumento,
-                                          string? caminhoFisicoGravacaoDocumento,
+        public DocumentoEnvelopeEmpregado(string nomeDocumento,
+                                          string codigoIdentificacaoDocumento,
+                                          string caminhoFisicoGravacaoDocumento,
                                           DateTime dataInsercaoDocumento)
         {
             NomeDocumento = nomeDocumento;
@@ -23,9 +23,9 @@ namespace APIRHIU.Domain.Models
 
         public Guid IdCapaEvelopeEmpregado { get; private set; }
         public DateTime DataInsercaoDocumento { get; private set; }
-        public string? NomeDocumento { get; private set; }
-        public string? CodigoIdentificacaoDocumento { get; private set; }
-        public string? CaminhoFisicoGravacaoDocumento { get; private set; }
+        public string NomeDocumento { get; private set; } = string.Empty;
+        public string CodigoIdentificacaoDocumento { get; private set; } = string.Empty;
+        public string CaminhoFisicoGravacaoDocumento { get; private set; } = string.Empty;
 
         #region Relacionamentos do Entity Framework
 

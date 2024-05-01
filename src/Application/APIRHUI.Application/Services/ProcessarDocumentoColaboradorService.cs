@@ -6,7 +6,7 @@ using APIRHIU.Domain.Interfaces;
 using APIRHIU.Domain.Models;
 using APIRHUI.Application.Commands;
 using AutoMapper;
-using System.Linq.Expressions;
+using Microsoft.Extensions.Options;
 
 namespace APIRHUI.Application.Services
 {
@@ -17,36 +17,42 @@ namespace APIRHUI.Application.Services
         private readonly ITokenRepository _tokenRepository;
         private readonly ICapaEnvelopeEmpregadoRepository _capaEnvelopeRepository;
         private readonly IMapper _mapper;
+        private readonly IOptions<AppSettings> _configuration;
 
         public ProcessarDocumentoColaboradorService(IMediatorHandler mediator,
                                                     IHttpClientService client,
                                                     ITokenRepository tokenRepository,
                                                     IMapper mapper,
-                                                    ICapaEnvelopeEmpregadoRepository capaEnvelopeRepository)
+                                                    ICapaEnvelopeEmpregadoRepository capaEnvelopeRepository,
+                                                    IOptions<AppSettings> configuration)
         {
             _mediator = mediator;
             _client = client;
             _tokenRepository = tokenRepository;
             _mapper = mapper;
             _capaEnvelopeRepository = capaEnvelopeRepository;
+            _configuration = configuration;
+            _configuration = configuration;
         }
 
         public async Task DisponibilizarDocumentoEmpregadoNoFileServer(List<CapaEnvelopeEmpregado> capas)
         {
             foreach (var capaEnvelopeEmpregado in capas)
             {
+                string? caminhoArquivo = @_configuration.Value.CaminhoBaseGravacaoDocumentoEmpregado
+                                             + "\\" + capaEnvelopeEmpregado.Id
+                                             + "\\" + capaEnvelopeEmpregado.CodigoIdentificaoEnvelope;
+
+                if (!Directory.Exists(caminhoArquivo))
+                    Directory.CreateDirectory(caminhoArquivo);
+
                 foreach (var documento in capaEnvelopeEmpregado.DocumentosEnvelope)
                 {
                     byte[] hashCodeDocumento = await _client.ObterDocumentoColaborador(documento.CodigoIdentificacaoDocumento);
 
-                    var caminhoArquivo = @$"C:\Users\eduar\OneDrive\Área de Trabalho\Documento Empregado Itg Sign\{documento.IdCapaEvelopeEmpregado}";
+                    //caminhoArquivo += @$"\{documento.NomeDocumento}.pdf";
 
-                    if (!Directory.Exists(caminhoArquivo))
-                        Directory.CreateDirectory(caminhoArquivo);
-
-                    caminhoArquivo += @$"\{documento.NomeDocumento}";
-
-                    File.WriteAllBytes(caminhoArquivo, hashCodeDocumento);
+                    File.WriteAllBytes(caminhoArquivo + @$"\{documento.NomeDocumento}.pdf", hashCodeDocumento);
                 }
             }
         }
