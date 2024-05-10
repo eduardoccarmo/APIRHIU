@@ -8,7 +8,7 @@ namespace APIRHIU.Domain.Interfaces
 
         void SalvarMudancasDocumentoEmpregado();
 
-        void AtualizarDocumentoEmpregado(DocumentoEnvelopeEmpregado? documento);
+        void AtualizarDocumentoEmpregado(Guid id);
 
         Task<DocumentoEnvelopeEmpregado?> ObterDocumentPorId(Guid? id);
 

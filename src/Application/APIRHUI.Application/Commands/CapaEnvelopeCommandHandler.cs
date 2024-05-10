@@ -54,7 +54,7 @@ namespace APIRHUI.Application.Commands
 
             documento?.SetarCaminhoFisicoArquivo(request.CaminhoDocumentoEmpregado);
 
-            _repository.AtualizarDocumentoEmpregado(documento);
+            _repository.AtualizarDocumentoEmpregado(documento.Id);
 
             await _uow.Commit(); 
 

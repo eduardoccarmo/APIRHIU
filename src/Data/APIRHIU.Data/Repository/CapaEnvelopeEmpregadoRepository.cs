@@ -19,9 +19,11 @@ namespace APIRHIU.Data.Repository
             _context.Add(documento);
         }
 
-        public void AtualizarDocumentoEmpregado(DocumentoEnvelopeEmpregado? documento)
+        public async void AtualizarDocumentoEmpregado(Guid id)
         {
-            _context.DocumentoEnvelopeEmpregados.Update(documento);
+            DocumentoEnvelopeEmpregado? documentoEnvelopeEmpregado = await ObterDocumentPorId(id);
+            
+            _context.DocumentoEnvelopeEmpregados.Update(documentoEnvelopeEmpregado);
         }
 
         public async Task<DocumentoEnvelopeEmpregado?> ObterDocumentPorId(Guid? id)
