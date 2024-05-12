@@ -8,8 +8,6 @@
         public string? EndPointEnvelope { get; set; } = null;
         public string? EndPointArquivo { get; set; } = null;
         public string? PrivateKey { get; set; } = null;
-        public string? CaminhoBaseGravacaoDocumentoEmpregado { get; set; }
-        
-
+        public string CaminhoBaseGravacaoDocumentoEmpregado { get; set; } = string.Empty;
     }
 }

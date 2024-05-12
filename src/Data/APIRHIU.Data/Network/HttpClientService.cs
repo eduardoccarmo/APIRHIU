@@ -1,4 +1,6 @@
-﻿using APIRHIU.Core.DomainObjects;
+﻿using APIRHIU.Core.Communication;
+using APIRHIU.Core.DomainObjects;
+using APIRHIU.Core.Message.CommomMessage;
 using APIRHIU.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
@@ -10,14 +12,18 @@ namespace APIRHIU.Data.Network
         private readonly HttpClient _httpClient;
         private readonly IOptions<AppSettings> _options;
         private readonly ITokenService _tokenService;
+        private readonly IMediatorHandler _mediatorHandler;
+
 
         public HttpClientService(HttpClient httpClient,
                                  IOptions<AppSettings> options,
-                                 ITokenService tokenService)
+                                 ITokenService tokenService,
+                                 IMediatorHandler mediatorHandler)
         {
             _httpClient = httpClient;
             _options = options;
             _tokenService = tokenService;
+            _mediatorHandler = mediatorHandler;
         }
 
         public async Task<string?> GerarBearerToken()
@@ -93,12 +99,14 @@ namespace APIRHIU.Data.Network
                 }
             }
             catch (HttpRequestException) { }
+           
 
             return ret;
         }
 
-        public async Task<byte[]> ObterDocumentoColaborador(string uiid)
+        public async Task<byte[]?> ObterDocumentoColaborador(string uiid)
         {
+            byte[]? byteArrayArquivoEmpregado = null;
 
             var message = new HttpRequestMessage
             {
@@ -106,10 +114,22 @@ namespace APIRHIU.Data.Network
                 Method = HttpMethod.Get
             };
 
-            using var response = await _httpClient.SendAsync(message);
+            try
+            {
+                using var response = await _httpClient.SendAsync(message);
 
-            byte[] byteArrayArquivoEmpregado = await response.Content.ReadAsByteArrayAsync();
-            
+                if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
+                { 
+                    byteArrayArquivoEmpregado = await response.Content.ReadAsByteArrayAsync();
+
+                    return byteArrayArquivoEmpregado;
+                }
+            }
+            catch (HttpRequestException) 
+            {
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification("Aviso", $"Erro ao obter o documento {uiid}"));
+            }
+
             return byteArrayArquivoEmpregado;
         }
     }

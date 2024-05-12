@@ -27,6 +27,11 @@ namespace APIRHIU.Core.Message.CommomMessage
             return _domainNotifications.Any();
         }
 
+        public virtual bool TemAviso()
+        {
+            return _domainNotifications.Where(x => x.Key == "Aviso").Any();
+        }
+
         public void Dispose()
         {
             _domainNotifications = new List<DomainNotification>();

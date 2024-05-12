@@ -26,6 +26,17 @@ namespace APIRHIU.Api.Controllers
                 }) ;
             }
 
+            if (TemAviso())
+            {
+                return Ok(new
+                {
+                    sucesso = true,
+                    statusCode = statusCode,
+                    avisos = _domainNotificationHandler.ObterNotificacoes().Where(x => x.Key == "Aviso").Select(x => x.Value).ToList()
+                }) ;
+            }
+
+
             return BadRequest(new
             {
                 errors = _domainNotificationHandler.ObterNotificacoes().Select(x => x.Value).ToList()
@@ -35,6 +46,11 @@ namespace APIRHIU.Api.Controllers
         protected bool OperacaoValida()
         {
             return !_domainNotificationHandler.TemNotificacao();
+        }
+
+        protected bool TemAviso()
+        {
+            return _domainNotificationHandler.TemAviso();
         }
     }
 }

@@ -32,6 +32,9 @@ namespace APIRHUI.Application.Commands
                                                                            request.DataCriacaoEnvelope,
                                                                            request.SituacaoEnvelope,
                                                                            request.CodigoIdentificaoEnvelope);
+
+            request.SetarIdCommand(capaEnvelope.Id);
+
             _repository.Adicionar(capaEnvelope);
 
             foreach (var doc in request.DocumentosEnvelope)
@@ -56,9 +59,7 @@ namespace APIRHUI.Application.Commands
 
             _repository.AtualizarDocumentoEmpregado(documento.Id);
 
-            await _uow.Commit(); 
-
-            return true;
+            return await _uow.Commit();
         }
 
         private bool ValidarComando(Command command)

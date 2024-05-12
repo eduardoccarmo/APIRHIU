@@ -6,6 +6,6 @@ namespace APIRHIU.Data.Network
     {
         Task<string?> GerarBearerToken();
         Task<RetornoUnico> ObterEnvelopeColaborador(string? token);
-        Task<byte[]> ObterDocumentoColaborador(string uiid);
+        Task<byte[]?> ObterDocumentoColaborador(string uiid);
     }
 }

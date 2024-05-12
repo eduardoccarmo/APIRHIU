@@ -30,7 +30,7 @@ namespace APIRHUI.Application.Commands
         #endregion
 
         #region Propriedades
-
+        public Guid Id { get; private set; }
         public string? MatriculaEmpregado { get; private set; }
         public DateTime DataCriacaoEnvelope { get; private set; }
         public string? SituacaoEnvelope { get; private set; }
@@ -51,6 +51,11 @@ namespace APIRHUI.Application.Commands
         public void PopularListaDocumentos(DocumentoEnvelopeEmpregado documento)
         {
             _documentosEnvelope?.Add(documento);
+        }
+
+        public void SetarIdCommand(Guid id)
+        {
+            Id = id;
         }
 
         #endregion

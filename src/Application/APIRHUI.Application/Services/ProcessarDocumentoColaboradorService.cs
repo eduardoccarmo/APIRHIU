@@ -35,35 +35,11 @@ namespace APIRHUI.Application.Services
             _configuration = configuration;
         }
 
-        public async Task DisponibilizarDocumentoEmpregadoNoFileServer(List<CapaEnvelopeEmpregado> capas)
-        {
-            foreach (var capaEnvelopeEmpregado in capas)
-            {
-                string? caminhoArquivo = @_configuration.Value.CaminhoBaseGravacaoDocumentoEmpregado
-                                             + "\\" + capaEnvelopeEmpregado.MatriculaEmpregado
-                                             + "\\" + capaEnvelopeEmpregado.Id;
-
-                if (!Directory.Exists(caminhoArquivo))
-                    Directory.CreateDirectory(caminhoArquivo);
-
-                foreach (var documento in capaEnvelopeEmpregado.DocumentosEnvelope)
-                {
-                    byte[] hashCodeDocumento = await _client.ObterDocumentoColaborador(documento.CodigoIdentificacaoDocumento);
-
-                    File.WriteAllBytes(caminhoArquivo + @$"\{documento.CodigoIdentificacaoDocumento} - {documento.NomeDocumento}.pdf", hashCodeDocumento);
-
-                    documento.SetarCaminhoFisicoArquivo(caminhoArquivo + @$"\{documento.CodigoIdentificacaoDocumento} - {documento.NomeDocumento}.pdf");
-
-                    _capaEnvelopeRepository.AtualizaDocumentoEmpregado(documento);
-                }
-            }
-        }
-
         public async Task<List<CapaEnvelopeEmpregado>> ProcessarDadosEnvelopeEmpregado(List<string> cpfs)
         {
             string? access_token = string.Empty;
 
-            List<CapaEnvelopeEmpregado> capas = new();
+            List<InserirCapaEnvelopeCommand> capas = new();
 
             List<TokenAcessoUnico> tokensGerados = await _tokenRepository.ObterTodos();
             TokenAcessoUnico? ultimoTokenGerado = tokensGerados.MaxBy(x => x.DataExpiracaoToken);
@@ -88,18 +64,48 @@ namespace APIRHUI.Application.Services
 
                     await _mediator.EnviarComando(command);
 
-                    capas.Add(_mapper.Map<CapaEnvelopeEmpregado>(command));
+                    capas.Add(command);
                 }
                 else
                 {
-                    await _mediator.PublicarNotificacao(new DomainNotification("ProcessarDocumentColaboradorService",
+                    await _mediator.PublicarNotificacao(new DomainNotification("Aviso",
                                                                                $"O envelope {envelope.UUID} já foi processado anteriormente."));
                 }
             }
 
             await DisponibilizarDocumentoEmpregadoNoFileServer(capas);
 
-            return capas;
+            return new List<CapaEnvelopeEmpregado>();
+        }
+
+
+        private async Task DisponibilizarDocumentoEmpregadoNoFileServer(List<InserirCapaEnvelopeCommand> capas)
+        {
+            foreach (var capaEnvelopeEmpregado in capas)
+            {
+                string diretorioAquivo = @_configuration.Value.CaminhoBaseGravacaoDocumentoEmpregado
+                    .Replace("#matriculaEmpregado", capaEnvelopeEmpregado.MatriculaEmpregado)
+                    .Replace("#idCapaEnvelopeEmpregado", capaEnvelopeEmpregado.Id.ToString());
+
+                if (!Directory.Exists(diretorioAquivo))
+                    Directory.CreateDirectory(diretorioAquivo);
+
+                foreach (var documento in capaEnvelopeEmpregado.DocumentosEnvelope)
+                {
+                    byte[]? hashCodeDocumento = await _client.ObterDocumentoColaborador(documento.CodigoIdentificacaoDocumento);
+
+                    string caminhoFisicoDocumentoEmpregado = diretorioAquivo + @$"\{documento.CodigoIdentificacaoDocumento} - {documento.NomeDocumento}.pdf";
+                    
+                    if(hashCodeDocumento != null)
+                    {
+                        await File.WriteAllBytesAsync(caminhoFisicoDocumentoEmpregado, hashCodeDocumento);
+
+                        AtualizarCaminhoDocumentoEmpregadoCommand command = new AtualizarCaminhoDocumentoEmpregadoCommand(documento.Id, caminhoFisicoDocumentoEmpregado);
+
+                        await _mediator.EnviarComando(command);
+                    }                    
+                }
+            }
         }
     }
 }

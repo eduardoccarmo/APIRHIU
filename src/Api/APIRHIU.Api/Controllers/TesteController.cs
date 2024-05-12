@@ -32,11 +32,19 @@ namespace APIRHIU.Api.Controllers
         [Route("teste/api")]
         public async Task<IActionResult> teste2(List<string> cpfs)
         {
-            var result = await _service.ProcessarDadosEnvelopeEmpregado(cpfs);
+            try
+            {
+                var result = await _service.ProcessarDadosEnvelopeEmpregado(cpfs);
 
-            List<string>? listaDeIds = new List<string>();
+                List<string>? listaDeIds = new List<string>();
 
-            return CustomResponse();
+                return CustomResponse();
+            }
+            catch (Exception)
+            {
+                return CustomResponse();
+            }
+            
         }
     }
 }

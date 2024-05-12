@@ -12,6 +12,21 @@ namespace APIRHUI.Application.Commands
 
         #endregion
 
+        #region Construtores
+
+        public AtualizarCaminhoDocumentoEmpregadoCommand()
+        {
+            
+        }
+
+        public AtualizarCaminhoDocumentoEmpregadoCommand(Guid idDocumentoEmpregado, string? caminhoDocumentoEmpregado)
+        {
+            IdDocumentoEmpregado = idDocumentoEmpregado;
+            CaminhoDocumentoEmpregado = caminhoDocumentoEmpregado;
+        }
+
+        #endregion
+
         #region Métodos
 
         public override bool EhValido()
