@@ -24,27 +24,31 @@ namespace APIRHIU.Api.Controllers
                 {
                     sucesso = true,
                     statusCode = statusCode
-                }) ;
+                });
             }
 
             if (TemAviso())
             {
-                Dictionary<string, string[]>? errors = new Dictionary<string, string[]>();
-
-                errors.Add("Mensagens", _domainNotificationHandler
-                                        .ObterNotificacoes()
-                                        .Where(x => x.Key == ETipoMensagem.warning.ToString())
-                                        .Select(x => x.Value)
-                                        .ToArray());
-
-                return BadRequest(new ValidationProblemDetails(errors));
+                return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
+                {
+                    {"Mensagens",  _domainNotificationHandler
+                                   .ObterNotificacoes()
+                                   .Where(x => x.Key == ETipoMensagem.warning.ToString())
+                                   .Select(x => x.Value).
+                                    ToArray()
+                    }
+                }));
             }
 
-
-            return BadRequest(new
+            return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
-                errors = _domainNotificationHandler.ObterNotificacoes().Select(x => x.Value).ToList()
-            });
+                {"Mensagens",  _domainNotificationHandler
+                                   .ObterNotificacoes()
+                                   .Where(x => x.Key == ETipoMensagem.error.ToString())
+                                   .Select(x => x.Value).
+                                    ToArray()
+                }
+            }));
         }
 
         protected bool OperacaoValida()
