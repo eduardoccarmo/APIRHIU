@@ -1,5 +1,6 @@
 ﻿using APIRHIU.Core.Communication;
 using APIRHIU.Core.DomainObjects;
+using APIRHIU.Core.Enums;
 using APIRHIU.Core.Message.CommomMessage;
 using APIRHIU.Data.Network;
 using APIRHIU.Domain.Interfaces;
@@ -68,8 +69,7 @@ namespace APIRHUI.Application.Services
                 }
                 else
                 {
-                    await _mediator.PublicarNotificacao(new DomainNotification("Aviso",
-                                                                               $"O envelope {envelope.UUID} já foi processado anteriormente."));
+                    await _mediator.PublicarNotificacao(new DomainNotification(ETipoMensagem.warning.ToString(), $"O envelope {envelope.UUID} já foi processado anteriormente."));
                 }
             }
 

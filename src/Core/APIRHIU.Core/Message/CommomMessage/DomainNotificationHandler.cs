@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using APIRHIU.Core.Enums;
+using MediatR;
 
 namespace APIRHIU.Core.Message.CommomMessage
 {
@@ -29,7 +30,7 @@ namespace APIRHIU.Core.Message.CommomMessage
 
         public virtual bool TemAviso()
         {
-            return _domainNotifications.Where(x => x.Key == "Aviso").Any();
+            return _domainNotifications.Where(x => x.Key == ETipoMensagem.warning.ToString()).Any();
         }
 
         public void Dispose()

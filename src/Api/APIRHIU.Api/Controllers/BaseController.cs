@@ -1,4 +1,5 @@
-﻿using APIRHIU.Core.Message.CommomMessage;
+﻿using APIRHIU.Core.Enums;
+using APIRHIU.Core.Message.CommomMessage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -28,12 +29,15 @@ namespace APIRHIU.Api.Controllers
 
             if (TemAviso())
             {
-                return Ok(new
-                {
-                    sucesso = true,
-                    statusCode = statusCode,
-                    avisos = _domainNotificationHandler.ObterNotificacoes().Where(x => x.Key == "Aviso").Select(x => x.Value).ToList()
-                }) ;
+                Dictionary<string, string[]>? errors = new Dictionary<string, string[]>();
+
+                errors.Add("Mensagens", _domainNotificationHandler
+                                        .ObterNotificacoes()
+                                        .Where(x => x.Key == ETipoMensagem.warning.ToString())
+                                        .Select(x => x.Value)
+                                        .ToArray());
+
+                return BadRequest(new ValidationProblemDetails(errors));
             }
 
 

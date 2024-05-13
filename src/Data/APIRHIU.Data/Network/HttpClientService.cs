@@ -1,5 +1,6 @@
 ﻿using APIRHIU.Core.Communication;
 using APIRHIU.Core.DomainObjects;
+using APIRHIU.Core.Enums;
 using APIRHIU.Core.Message.CommomMessage;
 using APIRHIU.Domain.Interfaces;
 using Microsoft.Extensions.Options;
@@ -127,7 +128,7 @@ namespace APIRHIU.Data.Network
             }
             catch (HttpRequestException) 
             {
-                await _mediatorHandler.PublicarNotificacao(new DomainNotification("Aviso", $"Erro ao obter o documento {uiid}"));
+                await _mediatorHandler.PublicarNotificacao(new DomainNotification(ETipoMensagem.warning.ToString(), $"O Documento {uiid} não foi localizado na plataforma Unico Sign."));
             }
 
             return byteArrayArquivoEmpregado;
