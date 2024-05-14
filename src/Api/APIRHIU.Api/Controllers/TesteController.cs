@@ -43,8 +43,7 @@ namespace APIRHIU.Api.Controllers
             catch (Exception)
             {
                 return CustomResponse();
-            }
-            
+            }            
         }
     }
 }

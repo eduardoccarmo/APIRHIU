@@ -94,7 +94,7 @@ namespace APIRHUI.Application.Services
                 {
                     byte[]? hashCodeDocumento = await _client.ObterDocumentoColaborador(documento.CodigoIdentificacaoDocumento);
 
-                    string caminhoFisicoDocumentoEmpregado = diretorioAquivo + @$"\{documento.CodigoIdentificacaoDocumento} - {documento.NomeDocumento}.pdf";
+                    string caminhoFisicoDocumentoEmpregado = diretorioAquivo + @$"\[ {documento.CodigoIdentificacaoDocumento} ] - {documento.NomeDocumento}.pdf";
                     
                     if(hashCodeDocumento != null)
                     {

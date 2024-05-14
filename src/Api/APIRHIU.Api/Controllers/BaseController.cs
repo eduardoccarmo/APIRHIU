@@ -43,10 +43,10 @@ namespace APIRHIU.Api.Controllers
             return BadRequest(new ValidationProblemDetails(new Dictionary<string, string[]>
             {
                 {"Mensagens",  _domainNotificationHandler
-                                   .ObterNotificacoes()
-                                   .Where(x => x.Key == ETipoMensagem.error.ToString())
-                                   .Select(x => x.Value).
-                                    ToArray()
+                               .ObterNotificacoes()
+                               .Where(x => x.Key == ETipoMensagem.error.ToString())
+                               .Select(x => x.Value)
+                               .ToArray()
                 }
             }));
         }
